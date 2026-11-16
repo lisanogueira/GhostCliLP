@@ -1,0 +1,527 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>GhostCLI — Preview da nova landing</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap">
+<style>
+body { margin: 0; background: #08090f; }
+a { color: inherit; text-decoration: none; }
+* { box-sizing: border-box; }
+.wrap { max-width: 1200px; margin: 0 auto; padding: 0 24px; }
+.mono { font-family: "JetBrains Mono", ui-monospace, Menlo, Consolas, monospace; }
+.sec { padding: 104px 0; }
+.eye { display: flex; align-items: center; gap: 12px; color: #9aa3b8; font-size: 14px; margin: 0 0 20px; }
+.eye::before { content: ""; width: 32px; height: 1px; background: #7a97ff; }
+.h2 { margin: 0; font-size: clamp(34px, 4.4vw, 56px); font-weight: 600; letter-spacing: -0.03em; line-height: 1.05; text-wrap: balance; }
+.lead { margin: 20px 0 0; color: #9aa3b8; font-size: 18px; line-height: 1.55; max-width: 560px; text-wrap: pretty; }
+.w { display: inline-block; }
+.w.a { color: #7a97ff; }
+
+.btn { display: inline-flex; align-items: center; gap: 12px; height: 52px; padding: 0 8px 0 24px; border-radius: 999px; background: #7a97ff; color: #08090f; font-weight: 600; font-size: 16px; box-shadow: 0 0 0 1px rgba(122,151,255,.4), 0 12px 44px -10px rgba(71,117,245,.85); transition: translate .25s ease, box-shadow .25s ease; }
+.btn:hover { translate: 0 -2px; box-shadow: 0 0 0 1px rgba(122,151,255,.6), 0 18px 56px -10px rgba(71,117,245,1); }
+.btn .dot { width: 36px; height: 36px; border-radius: 50%; background: #08090f; color: #f1efe9; display: grid; place-items: center; transition: transform .3s ease; }
+.btn:hover .dot { transform: translateX(2px) rotate(-45deg); }
+.btn2 { display: inline-flex; align-items: center; height: 52px; padding: 0 24px; border-radius: 999px; border: 1px solid rgba(255,255,255,.16); color: #f1efe9; font-weight: 600; font-size: 16px; transition: border-color .25s ease, background .25s ease; }
+.btn2:hover { border-color: rgba(122,151,255,.7); background: rgba(122,151,255,.08); }
+.navl { color: #b6bdcf; font-size: 15px; padding: 12px 10px; transition: color .2s ease; }
+.navl:hover { color: #f1efe9; }
+.fl2 { color: #9aa3b8; font-size: 15px; padding: 6px 0; display: block; }
+.fl2:hover { color: #f1efe9; }
+
+.card { background: #0f1218; border: 1px solid rgba(255,255,255,.07); border-radius: 24px; padding: 28px; transition: translate .3s ease, border-color .3s ease; }
+.card:hover { translate: 0 -4px; border-color: rgba(122,151,255,.4); }
+.chip { display: inline-flex; align-items: center; gap: 8px; height: 36px; padding: 0 14px; border-radius: 12px; background: #0f1218; border: 1px solid rgba(255,255,255,.09); color: #c9cfdd; font-size: 13px; }
+.pill { display: inline-flex; align-items: center; height: 44px; padding: 0 18px; border-radius: 14px; background: #12151d; border: 1px solid rgba(255,255,255,.1); font-weight: 600; font-size: 15px; box-shadow: 0 14px 30px -14px rgba(0,0,0,.9); animation: bob 5s ease-in-out infinite; }
+.pill:nth-child(1) { rotate: -6deg; }
+.pill:nth-child(2) { rotate: 4deg; animation-delay: -1.2s; }
+.pill:nth-child(3) { rotate: -3deg; animation-delay: -2.1s; }
+.pill:nth-child(4) { rotate: 5deg; animation-delay: -0.6s; }
+.pill:nth-child(5) { rotate: -4deg; animation-delay: -3s; }
+.pill:nth-child(6) { rotate: 3deg; animation-delay: -1.8s; }
+
+.hero { position: relative; margin: 12px 16px 0; border-radius: 32px; border: 1px solid rgba(255,255,255,.08); min-height: 800px; padding: 56px 24px 72px; overflow: hidden; background-color: #0a0c13; background-image: radial-gradient(rgba(122,151,255,.22) 1px, transparent 1.4px); background-size: 22px 22px; }
+.hero::before { content: ""; position: absolute; inset: 0; background: radial-gradient(60% 55% at 50% 38%, rgba(10,12,19,.2), #0a0c13 78%); pointer-events: none; }
+.hero::after { content: ""; position: absolute; left: 50%; top: -120px; width: 620px; height: 420px; translate: -50% 0; background: radial-gradient(closest-side, rgba(71,117,245,.4), transparent); animation: breathe 5s ease-in-out infinite; pointer-events: none; }
+.hin { position: relative; z-index: 2; display: flex; flex-direction: column; align-items: center; text-align: center; }
+.tile { width: 72px; height: 72px; border-radius: 20px; background: #12151d; border: 1px solid rgba(255,255,255,.12); display: grid; place-items: center; box-shadow: 0 0 0 6px rgba(122,151,255,.06), 0 20px 50px -12px rgba(71,117,245,.8); animation: bob 4.5s ease-in-out infinite; }
+.h1 { margin: 40px 0 0; font-size: clamp(44px, 6vw, 76px); font-weight: 600; letter-spacing: -0.035em; line-height: 1.0; }
+.h1 .w { animation: rise .8s cubic-bezier(.2,.7,.2,1) both; }
+.h1 .w:nth-child(2) { animation-delay: .08s; }
+.h1 .w:nth-child(3) { animation-delay: .16s; }
+.h1 .w:nth-child(5) { animation-delay: .34s; }
+.h1 .w:nth-child(6) { animation-delay: .42s; }
+.fade { animation: rise .8s cubic-bezier(.2,.7,.2,1) both; }
+.f1 { animation-delay: .55s; }
+.f2 { animation-delay: .7s; }
+.f3 { animation-delay: .85s; }
+.deco { position: absolute; z-index: 1; }
+.lines { left: 0; top: 0; width: 100%; height: 300px; }
+.lines path { fill: none; stroke: rgba(122,151,255,.6); stroke-width: 1.6; stroke-linecap: round; stroke-dasharray: 1 8; vector-effect: non-scaling-stroke; animation: flow 1.6s linear infinite; }
+.fl { position: absolute; z-index: 3; bottom: 40px; }
+.fl.l { left: 8px; width: 352px; animation: inl 1.1s cubic-bezier(.2,.7,.2,1) .5s both; }
+.fl.r { right: 8px; width: 320px; animation: inr 1.1s cubic-bezier(.2,.7,.2,1) .7s both; }
+.fl.l .in { rotate: -5deg; animation: bob 6s ease-in-out infinite; }
+.fl.r .in { rotate: 5deg; animation: bob 6s ease-in-out -2.5s infinite; }
+.panel { background: rgba(15,18,24,.92); border: 1px solid rgba(255,255,255,.1); border-radius: 20px; box-shadow: 0 40px 80px -30px rgba(0,0,0,.95), 0 0 0 1px rgba(122,151,255,.06); text-align: left; }
+.tl { animation: fadein .45s ease both; font-size: 12.5px; line-height: 1.9; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.tl:nth-child(1) { animation-delay: 1.3s; }
+.tl:nth-child(2) { animation-delay: 1.9s; }
+.tl:nth-child(3) { animation-delay: 2.3s; }
+.tl:nth-child(4) { animation-delay: 2.9s; }
+.tl:nth-child(5) { animation-delay: 3.5s; }
+.tl:nth-child(6) { animation-delay: 4.1s; }
+.tl:nth-child(7) { animation-delay: 4.5s; }
+.tl:nth-child(8) { animation-delay: 5.1s; }
+.tl:nth-child(9) { animation-delay: 5.7s; }
+.tl:nth-child(10) { animation-delay: 6s; }
+.caret { display: inline-block; width: 8px; height: 15px; background: #7a97ff; vertical-align: -2px; animation: blink 1s steps(1) infinite; }
+.live { width: 8px; height: 8px; border-radius: 50%; background: #5fd39a; box-shadow: 0 0 0 0 rgba(95,211,154,.6); animation: ping 2s ease-out infinite; }
+
+.mq { overflow: hidden; -webkit-mask-image: linear-gradient(90deg, transparent, #000 12%, #000 88%, transparent); mask-image: linear-gradient(90deg, transparent, #000 12%, #000 88%, transparent); }
+.mqt { display: flex; gap: 12px; width: max-content; animation: marquee 36s linear infinite; }
+.mq:hover .mqt { animation-play-state: paused; }
+.mqi { display: inline-flex; align-items: center; height: 44px; padding: 0 20px; border-radius: 999px; border: 1px solid rgba(255,255,255,.09); background: #0f1218; color: #c9cfdd; font-size: 15px; white-space: nowrap; }
+
+.row { display: grid; grid-template-columns: 1.6fr 1fr 1.7fr .7fr 1.1fr; gap: 16px; align-items: center; min-width: 760px; padding: 15px 24px; border-top: 1px solid rgba(255,255,255,.06); font-size: 15px; transition: background .2s ease; }
+.row:hover { background: rgba(122,151,255,.06); }
+.row.hd { border-top: 0; color: #9aa3b8; font-size: 12px; letter-spacing: .08em; text-transform: uppercase; }
+.row.hd:hover { background: none; }
+.tag { display: inline-flex; align-items: center; height: 26px; padding: 0 10px; border-radius: 999px; font-size: 12px; font-weight: 600; background: rgba(122,151,255,.14); color: #a9bcff; white-space: nowrap; }
+.li { display: flex; gap: 10px; align-items: flex-start; color: #c9cfdd; font-size: 15px; line-height: 1.45; }
+.li svg { flex: none; margin-top: 3px; color: #7a97ff; }
+.bar { height: 10px; border-radius: 999px; background: #1a1e29; overflow: hidden; display: flex; }
+.bar i { display: block; height: 100%; transform-origin: left center; }
+.feat { position: relative; overflow: hidden; }
+.feat::after { content: ""; position: absolute; inset: 0; background: linear-gradient(110deg, transparent 40%, rgba(122,151,255,.14) 50%, transparent 60%); background-size: 250% 100%; background-position: 100% 0; animation: shine 4.5s ease-in-out infinite; pointer-events: none; }
+details { border-top: 1px solid rgba(255,255,255,.08); }
+summary { list-style: none; cursor: pointer; display: flex; justify-content: space-between; align-items: center; gap: 24px; padding: 24px 4px; font-size: 19px; font-weight: 600; min-height: 44px; }
+summary::-webkit-details-marker { display: none; }
+summary .pl { flex: none; width: 36px; height: 36px; border-radius: 50%; border: 1px solid rgba(255,255,255,.16); display: grid; place-items: center; transition: rotate .3s ease, background .3s ease; }
+details[open] summary .pl { rotate: 45deg; background: rgba(122,151,255,.18); }
+details p { margin: 0; padding: 0 60px 26px 4px; color: #9aa3b8; font-size: 16px; line-height: 1.6; max-width: 760px; animation: rise .4s ease both; }
+
+[data-anim] .rv { opacity: 0; transform: translateY(28px); transition: opacity .8s cubic-bezier(.2,.7,.2,1), transform .8s cubic-bezier(.2,.7,.2,1), translate .3s ease, border-color .3s ease; }
+[data-anim] .rv[data-in] { opacity: 1; transform: none; }
+[data-anim] .rv.d1 { transition-delay: .08s, .08s, 0s, 0s; }
+[data-anim] .rv.d2 { transition-delay: .16s, .16s, 0s, 0s; }
+[data-anim] .rv.d3 { transition-delay: .24s, .24s, 0s, 0s; }
+[data-anim] .lit .w { color: #2f3546; transform: translateY(10px); transition: color .7s ease, transform .7s cubic-bezier(.2,.7,.2,1); }
+[data-anim] .lit[data-in] .w { color: #f1efe9; transform: none; }
+[data-anim] .lit[data-in] .w.a { color: #7a97ff; }
+.lit .w:nth-child(2) { transition-delay: .07s; }
+.lit .w:nth-child(3) { transition-delay: .14s; }
+.lit .w:nth-child(4) { transition-delay: .21s; }
+.lit .w:nth-child(5) { transition-delay: .28s; }
+.lit .w:nth-child(6) { transition-delay: .35s; }
+.lit .w:nth-child(7) { transition-delay: .42s; }
+.lit .w:nth-child(8) { transition-delay: .49s; }
+.lit .w:nth-child(9) { transition-delay: .56s; }
+.lit .w:nth-child(10) { transition-delay: .63s; }
+[data-anim] .rv .bar i { transform: scaleX(0); transition: transform 1.2s cubic-bezier(.2,.7,.2,1) .4s; }
+[data-anim] .rv[data-in] .bar i { transform: none; }
+
+@keyframes rise { from { opacity: 0; transform: translateY(18px); } }
+@keyframes fadein { from { opacity: 0; } }
+@keyframes bob { 0%, 100% { translate: 0 0; } 50% { translate: 0 -9px; } }
+@keyframes breathe { 0%, 100% { opacity: .65; } 50% { opacity: 1; } }
+@keyframes flow { to { stroke-dashoffset: -18; } }
+@keyframes blink { 50% { opacity: 0; } }
+@keyframes ping { to { box-shadow: 0 0 0 10px rgba(95,211,154,0); } }
+@keyframes marquee { to { transform: translateX(-50%); } }
+@keyframes shine { 0%, 40% { background-position: 100% 0; } 100% { background-position: 0 0; } }
+@keyframes inl { from { opacity: 0; transform: translate(-60px, 40px) rotate(-10deg); } }
+@keyframes inr { from { opacity: 0; transform: translate(60px, 40px) rotate(10deg); } }
+
+@media (max-width: 1279px) {
+  .deco { display: none; }
+  .hero { min-height: 0; padding-bottom: 48px; }
+  .fl.l, .fl.r { position: relative; left: auto; right: auto; bottom: auto; width: auto; max-width: 420px; margin: 28px auto 0; }
+  .fl.l .in, .fl.r .in { rotate: 0deg; animation: none; }
+}
+@media (max-width: 860px) {
+  .navlinks { display: none; }
+  .sec { padding: 72px 0; }
+  .hero { margin: 8px 8px 0; border-radius: 24px; }
+  details p { padding-right: 4px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation: none !important; transition: none !important; }
+}
+</style>
+<style>html{scroll-behavior:smooth}</style>
+</head>
+<body>
+<div data-ghost="1" style="background: #08090f; color: #f1efe9; font-family: Archivo, system-ui, -apple-system, 'Segoe UI', sans-serif; overflow-x: clip">
+
+<header style="position: sticky; top: 12px; z-index: 20; padding: 12px 16px 0">
+<nav aria-label="Principal" style="max-width: 860px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; gap: 16px; height: 60px; padding: 0 8px 0 20px; border-radius: 999px; background: rgba(15,18,24,.72); border: 1px solid rgba(255,255,255,.1); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px)">
+<a href="#topo" style="display: flex; align-items: center; gap: 10px; font-weight: 700; font-size: 19px; letter-spacing: -0.01em">
+<svg aria-hidden="true" width="22" height="25" viewBox="0 0 32 36" fill="none"><path d="M4 16C4 8.3 9.4 3 16 3C22.6 3 28 8.3 28 16V33.2L24.2 30.2L20.1 33.2L16 30.2L11.9 33.2L7.8 30.2L4 33.2V16Z" fill="#f1efe9"></path><path d="M10 13.2L13.6 16.4L10 19.6" stroke="#08090f" style="stroke-width: 2.2; stroke-linecap: round; stroke-linejoin: round"></path><path d="M16.4 20H21.8" stroke="#08090f" style="stroke-width: 2.2; stroke-linecap: round"></path></svg>
+<span>Ghost<span style="color: #7a97ff">CLI</span></span>
+</a>
+<div class="navlinks" style="display: flex; align-items: center; gap: 4px">
+<a class="navl" href="#modelos">Modelos</a>
+<a class="navl" href="#recursos">Recursos</a>
+<a class="navl" href="#precos">Preços</a>
+<a class="navl" href="#faq">FAQ</a>
+<a class="navl" href="https://ghostcli.cloud/">Docs</a>
+<a class="navl" href="https://ghostcli.cloud/">Status</a>
+</div>
+<div style="display: flex; align-items: center; gap: 8px">
+<a class="navl" href="https://ghostcli.cloud/" style="color: #f1efe9; font-weight: 600">Entrar</a>
+<a class="btn" href="https://ghostcli.cloud/" style="height: 44px; font-size: 15px; padding: 0 6px 0 18px; gap: 10px">Começar <span class="dot" style="width: 32px; height: 32px"><svg aria-hidden="true" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" style="stroke-width: 2; stroke-linecap: round; stroke-linejoin: round"><path d="M5 12h14M13 6l6 6-6 6"></path></svg></span></a>
+</div>
+</nav>
+</header>
+
+<section id="topo" class="hero">
+<svg class="deco lines" aria-hidden="true" viewBox="0 0 1000 300" preserveAspectRatio="none"><path d="M140 78 C 300 78 360 92 466 92"></path><path d="M860 78 C 700 78 640 92 534 92"></path><path d="M130 268 C 300 268 380 200 478 130"></path><path d="M870 268 C 700 268 620 200 522 130"></path></svg>
+<span class="deco chip mono" style="left: 5%; top: 60px">Chat</span>
+<span class="deco chip mono" style="right: 5%; top: 60px">CLI</span>
+<span class="deco chip mono" style="left: 4%; top: 250px">API</span>
+<span class="deco chip mono" style="right: 4%; top: 250px">1M de contexto</span>
+
+<div class="hin">
+<div class="tile">
+<svg aria-hidden="true" width="34" height="38" viewBox="0 0 32 36" fill="none"><path d="M4 16C4 8.3 9.4 3 16 3C22.6 3 28 8.3 28 16V33.2L24.2 30.2L20.1 33.2L16 30.2L11.9 33.2L7.8 30.2L4 33.2V16Z" fill="#f1efe9"></path><path d="M10 13.2L13.6 16.4L10 19.6" stroke="#12151d" style="stroke-width: 2.2; stroke-linecap: round; stroke-linejoin: round"></path><path d="M16.4 20H21.8" stroke="#12151d" style="stroke-width: 2.2; stroke-linecap: round"></path></svg>
+</div>
+<h1 class="h1"><span class="w">Crie</span> <span class="w">com</span> <span class="w">IA.</span><br><span class="w a">Sem</span> <span class="w a">limites.</span></h1>
+<p class="fade f1" style="margin: 24px 0 0; max-width: 520px; font-size: 19px; line-height: 1.5; color: #c9cfdd; text-wrap: pretty">Claude Opus 5.5, Claude Fable 5.2 e Claude Sonnet 5. Uso ilimitado a partir de R$ 135,00/mês, nunca por token.</p>
+<p class="fade f1 mono" style="margin: 12px 0 0; font-size: 12px; color: #9aa3b8">Uso sujeito à política de uso justo.</p>
+<div class="fade f2" style="margin-top: 32px; display: flex; flex-wrap: wrap; justify-content: center; gap: 12px">
+<a class="btn" href="https://ghostcli.cloud/">Começar de graça <span class="dot"><svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" style="stroke-width: 2; stroke-linecap: round; stroke-linejoin: round"><path d="M5 12h14M13 6l6 6-6 6"></path></svg></span></a>
+<a class="btn2" href="#modelos">Ver os modelos</a>
+</div>
+<p class="fade f2" style="margin: 16px 0 0; font-size: 14px; color: #9aa3b8">PIX ou cripto · ativação automática</p>
+<div class="fade f3" style="margin-top: 48px; display: flex; flex-wrap: wrap; justify-content: center; gap: 14px; max-width: 520px">
+<span class="pill">Claude</span>
+<span class="pill">GPT</span>
+<span class="pill">GLM</span>
+<span class="pill">Hunyuan</span>
+<span class="pill">DeepSeek</span>
+<span class="pill">MiMo</span>
+</div>
+</div>
+
+<div class="fl l">
+<div class="in panel mono" style="padding: 0">
+<div style="display: flex; justify-content: space-between; align-items: center; padding: 12px 16px; border-bottom: 1px dashed rgba(255,255,255,.12); font-size: 12px; color: #9aa3b8">
+<span>&gt;_ ghostcli.cloud</span>
+<span style="display: flex; align-items: center; gap: 8px"><span class="live"></span>sessão ilustrativa</span>
+</div>
+<div style="padding: 12px 16px 16px">
+<div class="tl" style="color: #c9cfdd"><span style="color: #7a97ff">$</span> export ANTHROPIC_BASE_URL=https://ghostcli.cloud</div>
+<div class="tl" style="color: #c9cfdd"><span style="color: #7a97ff">$</span> claude</div>
+<div class="tl" style="color: #9aa3b8">› claude-opus-5-5</div>
+<div class="tl" style="color: #f1efe9; font-weight: 700">&gt; Refatorar middleware de auth</div>
+<div class="tl" style="color: #5fd39a">✓ 14 arquivos lidos · 3 alterados</div>
+<div class="tl" style="color: #f1efe9; font-weight: 700">&gt; /model claude-sonnet-5</div>
+<div class="tl" style="color: #5fd39a">✓ mesmo histórico, outro modelo</div>
+<div class="tl" style="color: #f1efe9; font-weight: 700">&gt; Escreve os testes do middleware</div>
+<div class="tl" style="color: #5fd39a">✓ 6 testes criados · todos passando</div>
+<div class="tl" style="color: #f1efe9">&gt; <span class="caret"></span></div>
+</div>
+</div>
+</div>
+
+<div class="fl r">
+<div class="in panel" style="padding: 22px">
+<div class="mono" style="font-size: 12px; color: #9aa3b8; letter-spacing: .06em; text-transform: uppercase">Sua fatura</div>
+<div style="margin-top: 14px; display: flex; justify-content: space-between; align-items: baseline; gap: 12px">
+<span style="color: #9aa3b8; font-size: 14px">mensagens no mês</span>
+<span class="mono" style="font-size: 18px; font-weight: 700">12.486</span>
+</div>
+<div style="margin-top: 10px; padding-top: 10px; border-top: 1px dashed rgba(255,255,255,.12); display: flex; justify-content: space-between; align-items: baseline; gap: 12px">
+<span style="color: #9aa3b8; font-size: 14px">cobrança extra</span>
+<span class="mono" style="font-size: 26px; font-weight: 700; color: #7a97ff">R$ 0,00</span>
+</div>
+<div style="margin-top: 14px; font-size: 14px; color: #c9cfdd">Sem surpresa na fatura.</div>
+</div>
+</div>
+</section>
+
+<section style="padding: 56px 0 0">
+<div class="wrap">
+<div class="rv" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(220px, 100%), 1fr)); gap: 0; border: 1px solid rgba(255,255,255,.08); border-radius: 24px; background: #0f1218; overflow: hidden">
+<div style="padding: 26px 28px; border-right: 1px solid rgba(255,255,255,.06)"><div style="font-size: 36px; font-weight: 600; letter-spacing: -0.03em">10</div><div style="color: #9aa3b8; font-size: 15px; margin-top: 4px">modelos numa chave só</div></div>
+<div style="padding: 26px 28px; border-right: 1px solid rgba(255,255,255,.06)"><div style="font-size: 36px; font-weight: 600; letter-spacing: -0.03em">1M</div><div style="color: #9aa3b8; font-size: 15px; margin-top: 4px">tokens de contexto</div></div>
+<div style="padding: 26px 28px; border-right: 1px solid rgba(255,255,255,.06)"><div style="font-size: 36px; font-weight: 600; letter-spacing: -0.03em; color: #7a97ff">∞</div><div style="color: #9aa3b8; font-size: 15px; margin-top: 4px">mensagens por mês</div></div>
+<div style="padding: 26px 28px"><div style="font-size: 36px; font-weight: 600; letter-spacing: -0.03em">98,94%</div><div style="color: #9aa3b8; font-size: 15px; margin-top: 4px">uptime nos últimos 30 dias</div></div>
+</div>
+<p class="rv" style="margin: 56px 0 20px; text-align: center; color: #9aa3b8; font-size: 15px">Funciona nas suas ferramentas</p>
+</div>
+<div class="mq rv">
+<div class="mqt">
+<span class="mqi">Claude Code</span><span class="mqi">Codex CLI</span><span class="mqi">Cursor</span><span class="mqi">Cline</span><span class="mqi">VS Code</span><span class="mqi">Windsurf</span><span class="mqi">OpenCode</span><span class="mqi">Open WebUI</span><span class="mqi">n8n</span><span class="mqi">AnythingLLM</span><span class="mqi">Zapier</span><span class="mqi">Make</span>
+<span class="mqi" aria-hidden="true">Claude Code</span><span class="mqi" aria-hidden="true">Codex CLI</span><span class="mqi" aria-hidden="true">Cursor</span><span class="mqi" aria-hidden="true">Cline</span><span class="mqi" aria-hidden="true">VS Code</span><span class="mqi" aria-hidden="true">Windsurf</span><span class="mqi" aria-hidden="true">OpenCode</span><span class="mqi" aria-hidden="true">Open WebUI</span><span class="mqi" aria-hidden="true">n8n</span><span class="mqi" aria-hidden="true">AnythingLLM</span><span class="mqi" aria-hidden="true">Zapier</span><span class="mqi" aria-hidden="true">Make</span>
+</div>
+</div>
+</section>
+
+<section id="modelos" class="sec">
+<div class="wrap">
+<p class="eye rv">Modelos</p>
+<h2 class="h2 lit"><span class="w">Os</span> <span class="w">modelos</span> <span class="w">de</span> <span class="w">fronteira,</span><br><span class="w a">numa</span> <span class="w a">chave</span> <span class="w a">só.</span></h2>
+<div class="rv" style="margin-top: 48px; border: 1px solid rgba(255,255,255,.08); border-radius: 24px; background: #0f1218; overflow-x: auto">
+<div class="row hd"><span>Modelo</span><span>Laboratório</span><span>Contexto</span><span>Saída</span><span>Plano</span></div>
+<div class="row"><strong style="font-weight: 600">Claude Opus 5.5</strong><span style="color: #9aa3b8">Anthropic</span><span style="color: #c9cfdd">256k Pro / Max · 1M Enterprise / Teams</span><span class="mono" style="font-size: 13px">128K</span><span><span class="tag">a partir do Pro</span></span></div>
+<div class="row"><strong style="font-weight: 600">Claude Sonnet 5</strong><span style="color: #9aa3b8">Anthropic</span><span style="color: #c9cfdd">256k Pro / Max · 1M Enterprise / Teams</span><span class="mono" style="font-size: 13px">128K</span><span><span class="tag">a partir do Pro</span></span></div>
+<div class="row"><strong style="font-weight: 600">Claude Sonnet 5.5</strong><span style="color: #9aa3b8">Anthropic</span><span style="color: #c9cfdd">256k Pro / Max · 1M Enterprise / Teams</span><span class="mono" style="font-size: 13px">128K</span><span><span class="tag">a partir do Pro</span></span></div>
+<div class="row"><strong style="font-weight: 600">Claude Fable 5.2</strong><span style="color: #9aa3b8">Anthropic</span><span style="color: #c9cfdd">256k Max · 1M Enterprise / Teams</span><span class="mono" style="font-size: 13px">128K</span><span><span class="tag">a partir do Max</span></span></div>
+<div class="row"><strong style="font-weight: 600">GLM 5.3</strong><span style="color: #9aa3b8">Z.ai</span><span style="color: #c9cfdd">1M · todos os planos</span><span class="mono" style="font-size: 13px">128K</span><span><span class="tag">a partir do Pro</span></span></div>
+<div class="row"><strong style="font-weight: 600">GLM 5.3 Flash</strong><span style="color: #9aa3b8">Z.ai</span><span style="color: #c9cfdd">1M · todos os planos</span><span class="mono" style="font-size: 13px">8K</span><span><span class="tag">a partir do Pro</span></span></div>
+<div class="row"><strong style="font-weight: 600">Hunyuan Hy4 Preview</strong><span style="color: #9aa3b8">Tencent</span><span style="color: #c9cfdd">1M · todos os planos</span><span class="mono" style="font-size: 13px">8K</span><span><span class="tag">a partir do Pro</span></span></div>
+<div class="row"><strong style="font-weight: 600">DeepSeek V4.1 Flash</strong><span style="color: #9aa3b8">DeepSeek</span><span style="color: #c9cfdd">1M · todos os planos</span><span class="mono" style="font-size: 13px">8K</span><span><span class="tag">a partir do Pro</span></span></div>
+<div class="row"><strong style="font-weight: 600">MiMo V2.6 Pro</strong><span style="color: #9aa3b8">Xiaomi</span><span style="color: #c9cfdd">1M · todos os planos</span><span class="mono" style="font-size: 13px">8K</span><span><span class="tag">a partir do Pro</span></span></div>
+<div class="row"><strong style="font-weight: 600">GPT-6 Astra</strong><span style="color: #9aa3b8">OpenAI</span><span style="color: #c9cfdd">1M · Enterprise / Teams</span><span class="mono" style="font-size: 13px">128K</span><span><span class="tag">a partir do Enterprise</span></span></div>
+</div>
+</div>
+</section>
+
+<section style="background: #0c0e15; border-radius: 48px 48px 0 0; border-top: 1px solid rgba(255,255,255,.07)" class="sec">
+<div class="wrap" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(420px, 100%), 1fr)); gap: 56px; align-items: center">
+<div>
+<p class="eye rv">Comparativo</p>
+<h2 class="h2 lit"><span class="w">Quanto</span> <span class="w">você</span> <span class="w">gastaria</span><br><span class="w a">pagando</span> <span class="w a">por</span> <span class="w a">token.</span></h2>
+<p class="lead rv">Claude Opus 5.5, 4.000 mensagens no mês: 900 tokens de entrada e 700 de saída por mensagem. Estimativa com o preço de tabela do provedor.</p>
+<div class="rv" style="margin-top: 32px"><a class="btn" href="#precos">Assinar Pro <span class="dot"><svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" style="stroke-width: 2; stroke-linecap: round; stroke-linejoin: round"><path d="M5 12h14M13 6l6 6-6 6"></path></svg></span></a></div>
+</div>
+<div class="rv d1" style="display: flex; flex-direction: column; gap: 16px">
+<div class="card" style="padding: 26px 28px">
+<div class="mono" style="font-size: 12px; letter-spacing: .08em; color: #9aa3b8; text-transform: uppercase">Pagando por token</div>
+<div class="mono" style="margin-top: 16px; display: grid; grid-template-columns: auto 1fr auto; gap: 8px 16px; font-size: 14px; color: #c9cfdd">
+<span>entrada</span><span style="color: #9aa3b8">3,6M tokens × US$ 5</span><span>US$ 18,00</span>
+<span>saída</span><span style="color: #9aa3b8">2,8M tokens × US$ 25</span><span>US$ 70,00</span>
+<span>total</span><span style="color: #9aa3b8">US$ 1 = R$ 5,40</span><span>US$ 88,00</span>
+</div>
+<div style="margin-top: 18px; padding-top: 18px; border-top: 1px dashed rgba(255,255,255,.12); display: flex; justify-content: space-between; align-items: baseline; gap: 16px"><span style="color: #9aa3b8">em reais</span><span style="font-size: 32px; font-weight: 600; letter-spacing: -0.02em">R$ 475,20</span></div>
+</div>
+<div class="card feat" style="padding: 26px 28px; border-color: rgba(122,151,255,.45); background: #10131c">
+<div class="mono" style="font-size: 12px; letter-spacing: .08em; color: #a9bcff; text-transform: uppercase">Com a GhostCLI</div>
+<div style="margin-top: 16px; display: flex; justify-content: space-between; gap: 16px; color: #c9cfdd; font-size: 15px"><span>GhostCLI Pro (30 dias) · nunca por token</span><span class="mono">R$ 135,00</span></div>
+<div style="margin-top: 8px; display: flex; justify-content: space-between; gap: 16px; color: #c9cfdd; font-size: 15px"><span>Acesso à API (30 dias)</span><span class="mono">R$ 25,00</span></div>
+<div style="margin-top: 18px; padding-top: 18px; border-top: 1px dashed rgba(255,255,255,.14); display: flex; justify-content: space-between; align-items: baseline; gap: 16px"><span style="color: #c9cfdd">diferença no mês</span><span style="font-size: 40px; font-weight: 600; letter-spacing: -0.03em; color: #7a97ff">R$ 315,20</span></div>
+</div>
+</div>
+</div>
+</section>
+
+<section id="recursos" class="sec" style="background: #0c0e15">
+<div class="wrap">
+<p class="eye rv">Recursos</p>
+<h2 class="h2 lit"><span class="w">Feito</span> <span class="w">para</span> <span class="w">quem</span> <span class="w">usa</span> <span class="w">IA</span><br><span class="w a">o</span> <span class="w a">dia</span> <span class="w a">inteiro.</span></h2>
+<p class="lead rv">Sem firula: as coisas que fazem diferença quando a IA vira parte do seu trabalho.</p>
+<div style="margin-top: 48px; display: grid; grid-template-columns: repeat(auto-fit, minmax(min(270px, 100%), 1fr)); gap: 16px">
+<div class="card rv"><h3 style="margin: 0; font-size: 20px; font-weight: 600">Só o topo, nada de enchimento</h3><p style="margin: 10px 0 0; color: #9aa3b8; line-height: 1.55; font-size: 15px">Só modelos de fronteira, escolhidos para código. Sem opção "econômica" que te faça errar a escolha no meio do trabalho.</p></div>
+<div class="card rv d1"><h3 style="margin: 0; font-size: 20px; font-weight: 600">Uso ilimitado de verdade</h3><p style="margin: 10px 0 0; color: #9aa3b8; line-height: 1.55; font-size: 15px">Sem cota de mensagens, sem cobrança por token e sem aquele medo de abrir a fatura no fim do mês.</p><div class="mono" style="margin-top: 18px; display: flex; justify-content: space-between; gap: 12px; font-size: 12px; color: #9aa3b8"><span>MENSAGENS ESTE MÊS<br><strong style="font-size: 20px; color: #f1efe9">12.569</strong></span><span style="text-align: right">COBRANÇA EXTRA<br><strong style="font-size: 20px; color: #7a97ff">R$ 0</strong></span></div></div>
+<div class="card rv d2"><h3 style="margin: 0; font-size: 20px; font-weight: 600">Segunda opinião em um clique</h3><p style="margin: 10px 0 0; color: #9aa3b8; line-height: 1.55; font-size: 15px">Travou com um modelo? Troque para outro laboratório no meio da conversa, com o mesmo histórico.</p></div>
+<div class="card rv d3"><h3 style="margin: 0; font-size: 20px; font-weight: 600">Resposta em streaming</h3><p style="margin: 10px 0 0; color: #9aa3b8; line-height: 1.55; font-size: 15px">O texto aparece token a token, do mesmo jeito no chat e na API. Primeiro token em menos de 300ms.</p></div>
+<div class="card rv"><h3 style="margin: 0; font-size: 20px; font-weight: 600">1M de contexto</h3><p style="margin: 10px 0 0; color: #9aa3b8; line-height: 1.55; font-size: 15px">Repositório inteiro, log de build completo, migração de dezenas de arquivos, tudo na mesma conversa.</p><div class="bar" style="margin-top: 18px" role="img" aria-label="710k de 1M de contexto em uso"><i style="width: 41%; background: #7a97ff"></i><i style="width: 18%; background: #4775f5"></i><i style="width: 12%; background: #2b3f8f"></i></div><div class="mono" style="margin-top: 10px; font-size: 12px; color: #9aa3b8">repositório 410k · log 180k · docs 120k · 710k / 1M</div></div>
+<div class="card rv d1"><h3 style="margin: 0; font-size: 20px; font-weight: 600">API compatível</h3><p style="margin: 10px 0 0; color: #9aa3b8; line-height: 1.55; font-size: 15px">Endpoint no formato de chat que você já usa. Trocar do seu provedor atual é mudar a URL base e a chave.</p></div>
+<div class="card rv d2"><h3 style="margin: 0; font-size: 20px; font-weight: 600">Seu código é seu</h3><p style="margin: 10px 0 0; color: #9aa3b8; line-height: 1.55; font-size: 15px">Nada de treinar modelo com o que você manda. Histórico na sua conta e apagável a qualquer momento.</p></div>
+<div class="card rv d3"><h3 style="margin: 0; font-size: 20px; font-weight: 600">Histórico completo</h3><p style="margin: 10px 0 0; color: #9aa3b8; line-height: 1.55; font-size: 15px">Toda conversa fica salva, com busca, fixação e organização. Volte a qualquer thread quando quiser.</p></div>
+</div>
+</div>
+</section>
+
+<section class="sec" style="background: #08090f; border-radius: 48px 48px 0 0; border-top: 1px solid rgba(255,255,255,.07); margin-top: -1px">
+<div class="wrap">
+<p class="eye rv">Como funciona</p>
+<h2 class="h2 lit"><span class="w">Três</span> <span class="w">passos.</span> <span class="w a">Uma</span> <span class="w a">chave.</span></h2>
+<div style="margin-top: 48px; display: grid; grid-template-columns: repeat(auto-fit, minmax(min(320px, 100%), 1fr)); gap: 16px">
+<div class="card rv"><div class="mono" style="color: #7a97ff; font-size: 13px">01</div><h3 style="margin: 12px 0 0; font-size: 22px; font-weight: 600">Escolha um plano</h3><div style="margin-top: 20px; display: flex; flex-wrap: wrap; gap: 8px"><span class="tag">Pro</span><span class="tag">Max</span><span class="tag">Enterprise</span><span class="tag">Teams</span></div></div>
+<div class="card rv d1"><div class="mono" style="color: #7a97ff; font-size: 13px">02</div><h3 style="margin: 12px 0 0; font-size: 22px; font-weight: 600">Gere uma chave no painel</h3><div class="mono" style="margin-top: 20px; padding: 12px 14px; border-radius: 12px; background: #08090f; border: 1px solid rgba(255,255,255,.08); font-size: 14px; color: #c9cfdd">gcli_••••••••••••</div><p style="margin: 12px 0 0; color: #9aa3b8; font-size: 14px">Acesso à API · R$ 25,00 por 30 dias</p></div>
+<div class="card rv d2"><div class="mono" style="color: #7a97ff; font-size: 13px">03</div><h3 style="margin: 12px 0 0; font-size: 22px; font-weight: 600">Cole no Claude Code ou no Codex</h3><div class="mono" style="margin-top: 20px; padding: 12px 14px; border-radius: 12px; background: #08090f; border: 1px solid rgba(255,255,255,.08); font-size: 12.5px; color: #c9cfdd; overflow-x: auto; white-space: nowrap"><span style="color: #9aa3b8"># bash</span><br>export ANTHROPIC_BASE_URL=https://ghostcli.cloud<br><span style="color: #9aa3b8"># PowerShell</span><br>$env:ANTHROPIC_BASE_URL="https://ghostcli.cloud"</div></div>
+</div>
+</div>
+</section>
+
+<section class="sec" style="padding-top: 0">
+<div class="wrap" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(420px, 100%), 1fr)); gap: 56px; align-items: center">
+<div>
+<p class="eye rv">API</p>
+<h2 class="h2 lit"><span class="w">A</span> <span class="w">mesma</span> <span class="w">conta</span><br><span class="w a">também</span> <span class="w a">nos</span> <span class="w a">seus</span> <span class="w a">apps.</span></h2>
+<p class="lead rv">Endpoint no formato de chat que você já conhece, com streaming SSE. Gere uma chave no painel, troque a URL base e o seu código continua o mesmo, só que com acesso a todos os modelos do catálogo. Acesso adicional de R$ 25 por 30 dias, por fora do plano.</p>
+<div class="rv" style="margin-top: 28px; display: flex; flex-direction: column; gap: 12px">
+<div class="li"><svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" style="stroke-width: 2.2; stroke-linecap: round; stroke-linejoin: round"><path d="M5 12l5 5L20 7"></path></svg><span>Compatível com os SDKs que você já usa</span></div>
+<div class="li"><svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" style="stroke-width: 2.2; stroke-linecap: round; stroke-linejoin: round"><path d="M5 12l5 5L20 7"></path></svg><span>Streaming token a token via SSE</span></div>
+<div class="li"><svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" style="stroke-width: 2.2; stroke-linecap: round; stroke-linejoin: round"><path d="M5 12l5 5L20 7"></path></svg><span>Uma chave, todos os modelos do seu plano</span></div>
+<div class="li"><svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" style="stroke-width: 2.2; stroke-linecap: round; stroke-linejoin: round"><path d="M5 12l5 5L20 7"></path></svg><span>Múltiplas chaves por projeto no plano Max</span></div>
+</div>
+</div>
+<div class="rv d1 panel mono" style="overflow: hidden">
+<div style="display: flex; justify-content: space-between; align-items: center; padding: 14px 18px; border-bottom: 1px solid rgba(255,255,255,.08); font-size: 12px; color: #9aa3b8"><span>ghostcli.cloud/v1</span><span style="display: flex; align-items: center; gap: 8px; color: #5fd39a"><span class="live"></span>200 OK</span></div>
+<pre class="mono" style="margin: 0; padding: 18px; font-size: 13px; line-height: 1.75; color: #c9cfdd; overflow-x: auto">curl https://ghostcli.cloud/v1/chat/completions \
+  -H "Authorization: Bearer $GHOSTCLI_KEY" \
+  -H "Content-Type: application/json" \
+  -d '&#123;
+    "model": "claude-opus-5-5",
+    "stream": true,
+    "messages": [&#123;"role": "user", "content": "Explica RAG em 3 linhas"&#125;]
+  &#125;'</pre>
+<div style="display: flex; flex-wrap: wrap; gap: 8px; padding: 14px 18px; border-top: 1px solid rgba(255,255,255,.08); font-size: 12px; color: #9aa3b8"><span class="chip" style="height: 30px">Anthropic · /v1/messages</span><span class="chip" style="height: 30px">OpenAI · /v1/chat/completions</span><span class="chip" style="height: 30px">SSE · stream: true</span></div>
+</div>
+</div>
+</section>
+
+<section class="sec" style="background: #0c0e15; border-radius: 48px 48px 0 0; border-top: 1px solid rgba(255,255,255,.07)">
+<div class="wrap">
+<p class="eye rv">Preço</p>
+<h2 class="h2 lit"><span class="w">Por</span> <span class="w">que</span> <span class="w">é</span> <span class="w a">tão</span> <span class="w a">mais</span> <span class="w a">barato?</span></h2>
+<p class="lead rv" style="max-width: 680px">O GhostCLI é um hub de modelos de IA. A gente contrata em volume nos provedores, aproveita créditos e cotas, e te conecta ao melhor caminho pra usar os modelos. É o mesmo Claude, só que cabe no seu bolso.</p>
+<div style="margin-top: 44px; display: grid; grid-template-columns: repeat(auto-fit, minmax(min(240px, 100%), 1fr)); gap: 16px">
+<div class="card rv"><div class="mono" style="font-size: 12px; color: #9aa3b8; letter-spacing: .08em; text-transform: uppercase">Provedores</div><div style="margin-top: 10px; font-size: 20px; font-weight: 600">Anthropic · OpenAI</div></div>
+<div class="card rv d1 feat" style="border-color: rgba(122,151,255,.45)"><div class="mono" style="font-size: 12px; color: #a9bcff; letter-spacing: .08em; text-transform: uppercase">GhostCLI</div><div style="margin-top: 10px; font-size: 20px; font-weight: 600">volume · créditos · cotas</div></div>
+<div class="card rv d2"><div class="mono" style="font-size: 12px; color: #9aa3b8; letter-spacing: .08em; text-transform: uppercase">Você</div><div style="margin-top: 10px; font-size: 20px; font-weight: 600">preço fixo por mês</div></div>
+</div>
+<div style="margin-top: 16px; display: grid; grid-template-columns: repeat(auto-fit, minmax(min(380px, 100%), 1fr)); gap: 16px">
+<div class="card rv"><h3 style="margin: 0; font-size: 20px; font-weight: 600">E a qualidade?</h3><p style="margin: 10px 0 0; color: #9aa3b8; line-height: 1.55; font-size: 15px">É o próprio Claude, do mesmo jeito. A gente não altera o modelo. O que pode variar às vezes é só a velocidade da resposta em horários de pico, e mesmo assim é rápida.</p></div>
+<div class="card rv d1"><h3 style="margin: 0; font-size: 20px; font-weight: 600">Funciona em todo lugar</h3><p style="margin: 10px 0 0; color: #9aa3b8; line-height: 1.55; font-size: 15px">Use no Claude Desktop (Windows, Mac, Linux), no Claude Code (terminal), no navegador, ou em qualquer ferramenta compatível. A mesma chave funciona em todos.</p></div>
+</div>
+</div>
+</section>
+
+<section id="precos" class="sec" style="background: #0c0e15; padding-top: 0">
+<div class="wrap">
+<p class="eye rv">Planos de 30 dias · PIX ou cripto</p>
+<h2 class="h2 lit"><span class="w">Preço</span> <span class="w">fixo,</span> <span class="w a">uso</span> <span class="w a">sem</span> <span class="w a">limite.</span></h2>
+<p class="lead rv">Sem crédito pré-pago, sem cobrança por token, sem pegadinha. Cancele quando quiser, direto pelo painel.</p>
+<div style="margin-top: 48px; display: grid; grid-template-columns: repeat(auto-fit, minmax(min(262px, 100%), 1fr)); gap: 16px; align-items: stretch">
+
+<div class="card rv" style="display: flex; flex-direction: column; gap: 18px">
+<div><h3 style="margin: 0; font-size: 22px; font-weight: 600">Pro</h3><p style="margin: 8px 0 0; color: #9aa3b8; font-size: 14px; line-height: 1.5">Ideal para quem usa IA todo dia no trabalho e nos estudos.</p></div>
+<div style="display: flex; align-items: baseline; gap: 6px"><span style="color: #9aa3b8">R$</span><span style="font-size: 44px; font-weight: 600; letter-spacing: -0.03em">135,00</span><span style="color: #9aa3b8">/mês</span></div>
+<a class="btn2" href="https://ghostcli.cloud/" style="justify-content: center">Assinar Pro</a>
+<div style="display: flex; flex-direction: column; gap: 10px">
+<div class="li"><svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" style="stroke-width: 2.2; stroke-linecap: round; stroke-linejoin: round"><path d="M5 12l5 5L20 7"></path></svg><span>Use quantas vezes quiser, sem limite</span></div>
+<div class="li"><svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" style="stroke-width: 2.2; stroke-linecap: round; stroke-linejoin: round"><path d="M5 12l5 5L20 7"></path></svg><span>Claude Opus 5.5 e Claude Sonnet 5</span></div>
+<div class="li"><svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" style="stroke-width: 2.2; stroke-linecap: round; stroke-linejoin: round"><path d="M5 12l5 5L20 7"></path></svg><span>Alterne entre os modelos quando quiser</span></div>
+<div class="li"><svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" style="stroke-width: 2.2; stroke-linecap: round; stroke-linejoin: round"><path d="M5 12l5 5L20 7"></path></svg><span>Acesso pelo computador e pelo navegador</span></div>
+<div class="li"><svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" style="stroke-width: 2.2; stroke-linecap: round; stroke-linejoin: round"><path d="M5 12l5 5L20 7"></path></svg><span>Resposta rápida, sem fila de espera</span></div>
+<div class="li"><svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" style="stroke-width: 2.2; stroke-linecap: round; stroke-linejoin: round"><path d="M5 12l5 5L20 7"></path></svg><span>Suporte por e-mail</span></div>
+</div>
+</div>
+
+<div class="card rv d1 feat" style="display: flex; flex-direction: column; gap: 18px; border-color: rgba(122,151,255,.55); background: #10131c; box-shadow: 0 30px 80px -40px rgba(71,117,245,.9)">
+<div><h3 style="margin: 0; font-size: 22px; font-weight: 600">Max</h3><p style="margin: 8px 0 0; color: #9aa3b8; font-size: 14px; line-height: 1.5">O plano completo, com o modelo mais poderoso do mundo.</p></div>
+<div style="display: flex; align-items: baseline; gap: 6px"><span style="color: #9aa3b8">R$</span><span style="font-size: 44px; font-weight: 600; letter-spacing: -0.03em">164,90</span><span style="color: #9aa3b8">/mês</span></div>
+<a class="btn" href="https://ghostcli.cloud/" style="justify-content: space-between; position: relative; z-index: 1">Assinar Max <span class="dot"><svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" style="stroke-width: 2; stroke-linecap: round; stroke-linejoin: round"><path d="M5 12h14M13 6l6 6-6 6"></path></svg></span></a>
+<div style="display: flex; flex-direction: column; gap: 10px">
+<div class="li"><svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" style="stroke-width: 2.2; stroke-linecap: round; stroke-linejoin: round"><path d="M5 12l5 5L20 7"></path></svg><span>Tudo do plano Pro, sem restrições</span></div>
+<div class="li"><svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" style="stroke-width: 2.2; stroke-linecap: round; stroke-linejoin: round"><path d="M5 12l5 5L20 7"></path></svg><span>Claude Fable 5.2, o mais avançado que existe</span></div>
+<div class="li"><svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" style="stroke-width: 2.2; stroke-linecap: round; stroke-linejoin: round"><path d="M5 12l5 5L20 7"></path></svg><span>Múltiplas chaves por projeto</span></div>
+</div>
+</div>
+
+<div class="card rv d2" style="display: flex; flex-direction: column; gap: 18px">
+<div><h3 style="margin: 0; font-size: 22px; font-weight: 600">Enterprise</h3><p style="margin: 8px 0 0; color: #9aa3b8; font-size: 14px; line-height: 1.5">Proxy e revenda autorizados. Volume alto na API sem risco de ban.</p></div>
+<div style="display: flex; align-items: baseline; gap: 6px"><span style="color: #9aa3b8">R$</span><span style="font-size: 44px; font-weight: 600; letter-spacing: -0.03em">650,00</span><span style="color: #9aa3b8">/mês</span></div>
+<a class="btn2" href="https://ghostcli.cloud/" style="justify-content: center">Assinar Enterprise</a>
+<div style="display: flex; flex-direction: column; gap: 10px">
+<div class="li"><svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" style="stroke-width: 2.2; stroke-linecap: round; stroke-linejoin: round"><path d="M5 12l5 5L20 7"></path></svg><span>Tudo do Max, sem limite</span></div>
+<div class="li"><svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" style="stroke-width: 2.2; stroke-linecap: round; stroke-linejoin: round"><path d="M5 12l5 5L20 7"></path></svg><span>GPT-6 Astra, exclusivo do Enterprise</span></div>
+<div class="li"><svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" style="stroke-width: 2.2; stroke-linecap: round; stroke-linejoin: round"><path d="M5 12l5 5L20 7"></path></svg><span>1M context window em todos os modelos</span></div>
+<div class="li"><svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" style="stroke-width: 2.2; stroke-linecap: round; stroke-linejoin: round"><path d="M5 12l5 5L20 7"></path></svg><span>Máxima velocidade de resposta</span></div>
+<div class="li"><svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" style="stroke-width: 2.2; stroke-linecap: round; stroke-linejoin: round"><path d="M5 12l5 5L20 7"></path></svg><span>Acesso prioritário nos horários de pico</span></div>
+</div>
+</div>
+
+<div class="card rv d3" style="display: flex; flex-direction: column; gap: 18px">
+<div><h3 style="margin: 0; font-size: 22px; font-weight: 600">GhostCLI For Teams</h3><p style="margin: 8px 0 0; color: #9aa3b8; font-size: 14px; line-height: 1.5">Para empresas com demanda altíssima: 15.000 RPM, fila no topo e os desenvolvedores a um ticket de distância.</p></div>
+<div style="display: flex; align-items: baseline; gap: 6px"><span style="color: #9aa3b8">R$</span><span style="font-size: 44px; font-weight: 600; letter-spacing: -0.03em">1.450,00</span><span style="color: #9aa3b8">/mês</span></div>
+<a class="btn2" href="https://ghostcli.cloud/" style="justify-content: center">Assinar Teams</a>
+<div style="display: flex; flex-direction: column; gap: 10px">
+<div class="li"><svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" style="stroke-width: 2.2; stroke-linecap: round; stroke-linejoin: round"><path d="M5 12l5 5L20 7"></path></svg><span>Tudo do Enterprise, sem limite</span></div>
+<div class="li"><svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" style="stroke-width: 2.2; stroke-linecap: round; stroke-linejoin: round"><path d="M5 12l5 5L20 7"></path></svg><span>15.000 RPM, demanda altíssima</span></div>
+<div class="li"><svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" style="stroke-width: 2.2; stroke-linecap: round; stroke-linejoin: round"><path d="M5 12l5 5L20 7"></path></svg><span>Prioridade máxima na fila em todos os modelos</span></div>
+<div class="li"><svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" style="stroke-width: 2.2; stroke-linecap: round; stroke-linejoin: round"><path d="M5 12l5 5L20 7"></path></svg><span>Suporte prioritário: resposta instantânea por ticket</span></div>
+<div class="li"><svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" style="stroke-width: 2.2; stroke-linecap: round; stroke-linejoin: round"><path d="M5 12l5 5L20 7"></path></svg><span>Contato direto com os desenvolvedores</span></div>
+<div class="li"><svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" style="stroke-width: 2.2; stroke-linecap: round; stroke-linejoin: round"><path d="M5 12l5 5L20 7"></path></svg><span>Até 200 IPs simultâneos na chave</span></div>
+</div>
+</div>
+
+</div>
+<p class="rv" style="margin: 24px 0 0; color: #9aa3b8; font-size: 14px; text-align: center">Upgrade a qualquer momento, pagando só a diferença.</p>
+</div>
+</section>
+
+<section id="faq" class="sec" style="background: #08090f; border-radius: 48px 48px 0 0; border-top: 1px solid rgba(255,255,255,.07)">
+<div class="wrap" style="max-width: 920px">
+<p class="eye rv">Dúvidas</p>
+<h2 class="h2 lit"><span class="w">Perguntas</span> <span class="w a">frequentes.</span></h2>
+<div class="rv" style="margin-top: 40px; border-bottom: 1px solid rgba(255,255,255,.08)">
+<details open>
+<summary>Por que tão poucos modelos?<span class="pl"><svg aria-hidden="true" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" style="stroke-width: 2; stroke-linecap: round"><path d="M12 5v14M5 12h14"></path></svg></span></summary>
+<p>Porque para escrever código o resto não compensa. Modelo "econômico" custa menos por token e custa muito mais em retrabalho: código quase certo, bug sutil, revisão longa. Claude Opus 5.5, Claude Sonnet 5 e Claude Fable 5.2 estão no topo em programação agêntica; a escolha é só quanta capacidade a tarefa pede.</p>
+</details>
+<details>
+<summary>O que significa "uso ilimitado"?<span class="pl"><svg aria-hidden="true" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" style="stroke-width: 2; stroke-linecap: round"><path d="M12 5v14M5 12h14"></path></svg></span></summary>
+<p>[RESPOSTA DA GHOSTCLI: colar aqui o texto atual do FAQ] Resumo do que a página já diz: sem cota de mensagens e sem cobrança por token, com uso sujeito à política de uso justo.</p>
+</details>
+<details>
+<summary>Como vocês conseguem cobrar tão pouco por modelos tão caros?<span class="pl"><svg aria-hidden="true" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" style="stroke-width: 2; stroke-linecap: round"><path d="M12 5v14M5 12h14"></path></svg></span></summary>
+<p>O GhostCLI é um hub de modelos de IA. A gente contrata em volume nos provedores, aproveita créditos e cotas, e te conecta ao melhor caminho pra usar os modelos.</p>
+</details>
+<details>
+<summary>Posso trocar de modelo no meio da conversa?<span class="pl"><svg aria-hidden="true" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" style="stroke-width: 2; stroke-linecap: round"><path d="M12 5v14M5 12h14"></path></svg></span></summary>
+<p>Pode. Travou com um modelo? Troque para outro laboratório no meio da conversa, com o mesmo histórico.</p>
+</details>
+</div>
+</div>
+</section>
+
+<section style="padding: 0 16px 16px">
+<div class="rv" style="position: relative; overflow: hidden; border-radius: 32px; border: 1px solid rgba(122,151,255,.3); padding: 88px 24px; text-align: center; background-color: #0a0c13; background-image: radial-gradient(rgba(122,151,255,.26) 1px, transparent 1.4px); background-size: 22px 22px">
+<div aria-hidden="true" style="position: absolute; left: 50%; bottom: -220px; width: 760px; height: 440px; translate: -50% 0; background: radial-gradient(closest-side, rgba(71,117,245,.55), transparent); animation: breathe 5s ease-in-out infinite; pointer-events: none"></div>
+<div style="position: relative">
+<h2 class="h2 lit" style="font-size: clamp(38px, 5vw, 64px)"><span class="w">Comece</span> <span class="w">agora,</span> <span class="w a">sem</span> <span class="w a">cartão.</span></h2>
+<p style="margin: 20px auto 0; max-width: 560px; color: #c9cfdd; font-size: 18px; line-height: 1.55">Crie a conta em menos de um minuto, teste os modelos rápidos no plano Free e só assine quando fizer sentido.</p>
+<div style="margin-top: 32px; display: flex; flex-wrap: wrap; justify-content: center; gap: 12px">
+<a class="btn" href="https://ghostcli.cloud/">Criar conta grátis <span class="dot"><svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" style="stroke-width: 2; stroke-linecap: round; stroke-linejoin: round"><path d="M5 12h14M13 6l6 6-6 6"></path></svg></span></a>
+<a class="btn2" href="https://ghostcli.cloud/">Já tenho conta</a>
+</div>
+<p style="margin: 20px 0 0; color: #9aa3b8; font-size: 14px">Ainda tem dúvidas? Fale com o suporte no Discord.</p>
+</div>
+</div>
+</section>
+
+<footer style="padding: 56px 0 40px">
+<div class="wrap">
+<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(200px, 100%), 1fr)); gap: 40px">
+<div style="max-width: 320px">
+<div style="display: flex; align-items: center; gap: 10px; font-weight: 700; font-size: 19px">
+<svg aria-hidden="true" width="22" height="25" viewBox="0 0 32 36" fill="none"><path d="M4 16C4 8.3 9.4 3 16 3C22.6 3 28 8.3 28 16V33.2L24.2 30.2L20.1 33.2L16 30.2L11.9 33.2L7.8 30.2L4 33.2V16Z" fill="#f1efe9"></path><path d="M10 13.2L13.6 16.4L10 19.6" stroke="#08090f" style="stroke-width: 2.2; stroke-linecap: round; stroke-linejoin: round"></path><path d="M16.4 20H21.8" stroke="#08090f" style="stroke-width: 2.2; stroke-linecap: round"></path></svg>
+<span>Ghost<span style="color: #7a97ff">CLI</span></span>
+</div>
+<p style="margin: 14px 0 0; color: #9aa3b8; font-size: 14px; line-height: 1.6">Os 10 melhores modelos do mundo para código, em uma assinatura só. Uso ilimitado, sem cobrança por token e sem surpresa na fatura.</p>
+<div class="mono" style="margin-top: 16px; display: inline-flex; align-items: center; gap: 10px; font-size: 12px; color: #5fd39a"><span class="live"></span>GATEWAY RESPONDENDO</div>
+</div>
+<div><div class="mono" style="font-size: 12px; letter-spacing: .08em; color: #9aa3b8; margin-bottom: 10px">PLANOS</div><a class="fl2" href="#precos">Pro · R$ 135,00</a><a class="fl2" href="#precos">Max · R$ 164,90</a><a class="fl2" href="#precos">Enterprise · R$ 650,00</a><a class="fl2" href="#precos">For Teams · R$ 1.450,00</a></div>
+<div><div class="mono" style="font-size: 12px; letter-spacing: .08em; color: #9aa3b8; margin-bottom: 10px">CONTA</div><a class="fl2" href="https://ghostcli.cloud/">Criar conta</a><a class="fl2" href="https://ghostcli.cloud/">Entrar</a><a class="fl2" href="https://ghostcli.cloud/">Painel</a><a class="fl2" href="https://ghostcli.cloud/">Chaves de API</a><a class="fl2" href="https://ghostcli.cloud/">Chat</a><a class="fl2" href="https://ghostcli.cloud/">Afiliados</a></div>
+<div><div class="mono" style="font-size: 12px; letter-spacing: .08em; color: #9aa3b8; margin-bottom: 10px">RECURSOS</div><a class="fl2" href="https://ghostcli.cloud/">Documentação da API</a><a class="fl2" href="https://ghostcli.cloud/">Guia de configuração</a><a class="fl2" href="#faq">Perguntas frequentes</a><a class="fl2" href="https://ghostcli.cloud/">Comparativo de preços</a><a class="fl2" href="https://ghostcli.cloud/">Status</a></div>
+</div>
+<div class="mono" style="margin-top: 48px; padding-top: 24px; border-top: 1px solid rgba(255,255,255,.08); display: flex; flex-wrap: wrap; justify-content: space-between; gap: 16px; font-size: 12px; color: #9aa3b8">
+<span>© 2026 GhostCLI. TODOS OS DIREITOS RESERVADOS</span>
+<span style="display: flex; gap: 20px"><a href="https://ghostcli.cloud/">TERMOS</a><a href="https://ghostcli.cloud/">SLA</a><a href="https://ghostcli.cloud/">PRIVACIDADE · LGPD</a></span>
+</div>
+</div>
+</footer>
+
+</div>
+<script>
+(function(){
+var root=document.querySelector('[data-ghost]');
+if(!root||!('IntersectionObserver' in window))return;
+if(window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches)return;
+root.setAttribute('data-anim','1');
+var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.setAttribute('data-in','1');io.unobserve(e.target);}});},{threshold:0.12,rootMargin:'0px 0px -6% 0px'});
+var els=root.querySelectorAll('.rv, .lit');for(var i=0;i<els.length;i++)io.observe(els[i]);
+})();
+</script>
+</body>
+</html>

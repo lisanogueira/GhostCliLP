@@ -7,7 +7,7 @@
 <title>GhostCLI — Preview da nova landing</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700&family=Caveat:wght@600&family=JetBrains+Mono:wght@400;500;700&display=swap">
 <style>
 body { margin: 0; background: #08090f; }
 a { color: inherit; text-decoration: none; }
@@ -45,8 +45,8 @@ a { color: inherit; text-decoration: none; }
 .pill:nth-child(5) { rotate: -4deg; animation-delay: -3s; }
 .pill:nth-child(6) { rotate: 3deg; animation-delay: -1.8s; }
 
-.hero { position: relative; margin: 12px 16px 0; border-radius: 32px; border: 1px solid rgba(255,255,255,.08); min-height: 800px; padding: 56px 24px 72px; overflow: hidden; background-color: #0a0c13; background-image: radial-gradient(rgba(122,151,255,.22) 1px, transparent 1.4px); background-size: 22px 22px; }
-.hero::before { content: ""; position: absolute; inset: 0; background: radial-gradient(60% 55% at 50% 38%, rgba(10,12,19,.2), #0a0c13 78%); pointer-events: none; }
+.hero { position: relative; margin: 12px 16px 0; border-radius: 32px; border: 1px solid rgba(255,255,255,.08); min-height: 800px; padding: 56px 24px 72px; overflow: hidden; background-color: #0a0c13; background-image: radial-gradient(rgba(122,151,255,.38) 1px, transparent 1.5px); background-size: 22px 22px; }
+.hero::before { content: ""; position: absolute; inset: 0; background: radial-gradient(70% 62% at 50% 40%, rgba(10,12,19,0), #0a0c13 92%); pointer-events: none; }
 .hero::after { content: ""; position: absolute; left: 50%; top: -120px; width: 620px; height: 420px; translate: -50% 0; background: radial-gradient(closest-side, rgba(71,117,245,.4), transparent); animation: breathe 5s ease-in-out infinite; pointer-events: none; }
 .hin { position: relative; z-index: 2; display: flex; flex-direction: column; align-items: center; text-align: center; }
 .tile { width: 72px; height: 72px; border-radius: 20px; background: #12151d; border: 1px solid rgba(255,255,255,.12); display: grid; place-items: center; box-shadow: 0 0 0 6px rgba(122,151,255,.06), 0 20px 50px -12px rgba(71,117,245,.8); animation: bob 4.5s ease-in-out infinite; }
@@ -145,7 +145,7 @@ details p { margin: 0; padding: 0 60px 26px 4px; color: #9aa3b8; font-size: 16px
   .fl.l .in, .fl.r .in { rotate: 0deg; animation: none; }
 }
 @media (max-width: 860px) {
-  .navlinks { display: none; }
+  .navlinks { display: none !important; }
   .sec { padding: 72px 0; }
   .hero { margin: 8px 8px 0; border-radius: 24px; }
   details p { padding-right: 4px; }
@@ -155,11 +155,102 @@ details p { margin: 0; padding: 0 60px 26px 4px; color: #9aa3b8; font-size: 16px
 }
 </style>
 <style>html{scroll-behavior:smooth}</style>
+<style>
+.eye { font-family: "JetBrains Mono", ui-monospace, Menlo, monospace; text-transform: uppercase; letter-spacing: .12em; font-size: 12px; color: #a9bcff; }
+.hand { margin-top: 12px; font-family: Caveat, "Segoe Script", cursive; font-size: 26px; line-height: 1; color: #7a97ff; rotate: -3deg; transform-origin: left center; text-decoration: underline wavy rgba(122,151,255,.6) 1.5px; text-underline-offset: 6px; }
+.prog { position: fixed; left: 0; top: 0; width: 100%; height: 2px; z-index: 40; pointer-events: none; }
+.prog i { display: block; height: 100%; background: linear-gradient(90deg, #4775f5, #a9bcff); transform: scaleX(0); transform-origin: left center; box-shadow: 0 0 12px rgba(122,151,255,.9); }
+[data-nav] nav { transition: background .3s ease, border-color .3s ease, box-shadow .3s ease; }
+[data-nav].scrolled nav { background: rgba(10,12,19,.9) !important; border-color: rgba(122,151,255,.28) !important; box-shadow: 0 18px 50px -20px rgba(0,0,0,.9); }
+
+.card { position: relative; overflow: hidden; }
+.card::before { content: ""; position: absolute; inset: 0; background: radial-gradient(340px circle at var(--mx, 50%) var(--my, 0%), rgba(122,151,255,.18), transparent 62%); opacity: 0; transition: opacity .35s ease; pointer-events: none; }
+.card:hover::before { opacity: 1; }
+
+/* títulos que acendem conforme o scroll */
+[data-anim] .lit .w { color: #2b3142; transform: none; transition: color .45s ease; transition-delay: 0s; }
+[data-anim] .lit .w.on { color: #f1efe9; }
+[data-anim] .lit .w.a.on { color: #7a97ff; text-shadow: 0 0 32px rgba(122,151,255,.35); }
+
+/* trilho de modelos */
+.railsec { padding: 104px 0; }
+.rail { margin-top: 44px; overflow-x: auto; scrollbar-width: none; -webkit-overflow-scrolling: touch; }
+.rail::-webkit-scrollbar { display: none; }
+.railt { display: flex; gap: 16px; width: max-content; padding: 6px max(24px, calc((100vw - 1200px) / 2 + 24px)) 10px; will-change: transform; }
+.mc { width: 300px; flex: none; display: flex; flex-direction: column; gap: 14px; padding: 24px; }
+.mc-top { display: flex; justify-content: space-between; align-items: center; gap: 12px; color: #9aa3b8; font-size: 14px; }
+.mc-lab { display: inline-flex; align-items: center; }
+.mc-n { font-size: 12px; color: #8089a0; }
+.mc-h { margin: 0 0 6px; font-size: 26px; font-weight: 600; letter-spacing: -0.02em; line-height: 1.1; }
+.mc-r { display: flex; justify-content: space-between; gap: 16px; padding-top: 12px; border-top: 1px dashed rgba(255,255,255,.1); font-size: 14px; }
+.mc-k { color: #9aa3b8; }
+.mc-v { color: #e3e6ee; text-align: right; line-height: 1.5; }
+.mc-f { margin-top: auto; padding-top: 4px; }
+.railbar { margin-top: 28px; height: 2px; border-radius: 2px; background: rgba(255,255,255,.08); overflow: hidden; display: none; }
+.railbar i { display: block; height: 100%; background: #7a97ff; transform: scaleX(0); transform-origin: left center; }
+
+/* como funciona */
+.how { background: #08090f; border-radius: 48px 48px 0 0; border-top: 1px solid rgba(255,255,255,.07); margin-top: -1px; padding: 104px 0; }
+.howgrid { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(420px, 100%), 1fr)); gap: 56px; align-items: center; width: 100%; }
+.steps { list-style: none; margin: 40px 0 0; padding: 0; position: relative; display: flex; flex-direction: column; gap: 8px; }
+.step { position: relative; display: flex; gap: 20px; padding: 18px 20px; border-radius: 20px; border: 1px solid transparent; transition: background .4s ease, border-color .4s ease, opacity .4s ease; }
+.step .num { flex: none; width: 40px; height: 40px; border-radius: 50%; display: grid; place-items: center; font-size: 13px; border: 1px solid rgba(255,255,255,.16); color: #c9cfdd; transition: background .4s ease, color .4s ease, border-color .4s ease, box-shadow .4s ease; }
+.step h3 { margin: 6px 0 0; font-size: 21px; font-weight: 600; letter-spacing: -0.01em; }
+.step p { margin: 8px 0 0; color: #9aa3b8; font-size: 15px; line-height: 1.5; }
+.stage { position: relative; display: flex; flex-direction: column; gap: 16px; }
+.stage .glow { position: absolute; left: 50%; top: 50%; width: 520px; height: 520px; translate: -50% -50%; background: radial-gradient(closest-side, rgba(71,117,245,.32), transparent); pointer-events: none; animation: breathe 5s ease-in-out infinite; }
+.scene { position: relative; overflow: hidden; }
+.sch { display: flex; justify-content: space-between; align-items: center; gap: 16px; padding: 14px 20px; border-bottom: 1px dashed rgba(255,255,255,.12); font-size: 12px; color: #9aa3b8; }
+.scb { padding: 22px 20px 24px; display: flex; flex-direction: column; gap: 10px; }
+.plrow { display: flex; align-items: center; gap: 14px; padding: 15px 16px; border-radius: 14px; border: 1px solid rgba(255,255,255,.08); background: #0b0d14; font-size: 16px; }
+.plrow strong { font-weight: 600; flex: 1; }
+.plrow .rd { width: 18px; height: 18px; border-radius: 50%; border: 1.5px solid rgba(255,255,255,.25); flex: none; }
+.plrow.sel { border-color: rgba(122,151,255,.7); background: rgba(122,151,255,.1); box-shadow: 0 0 0 4px rgba(122,151,255,.08); }
+.plrow.sel .rd { border-color: #7a97ff; background: radial-gradient(circle, #7a97ff 0 42%, transparent 46%); }
+.keyf, .cmd { padding: 16px; border-radius: 14px; background: #08090f; border: 1px solid rgba(255,255,255,.1); font-size: 14px; color: #e3e6ee; white-space: nowrap; overflow: hidden; display: flex; align-items: center; gap: 4px; }
+.keyf { font-size: 18px; letter-spacing: .04em; }
+.type { display: inline-block; overflow: hidden; white-space: nowrap; max-width: 100%; }
+.tabs { display: inline-flex; gap: 4px; }
+.tab { padding: 6px 12px; border-radius: 999px; }
+.tab.on { background: rgba(122,151,255,.16); color: #a9bcff; }
+.mqi.sm { height: 34px; padding: 0 14px; font-size: 13px; }
+@keyframes typing { from { max-width: 0; } }
+
+@media (min-width: 861px) {
+  [data-anim] .railsec { padding: 0; }
+  [data-anim] .railpin { position: sticky; top: 0; height: 100vh; min-height: 560px; display: flex; flex-direction: column; justify-content: center; padding-top: 72px; }
+  [data-anim] .rail { overflow: hidden; }
+  [data-anim] .railbar { display: block; }
+  [data-anim] .how { padding: 0; height: 340vh; }
+  [data-anim] .howpin { position: sticky; top: 0; height: 100vh; min-height: 600px; display: flex; align-items: center; padding-top: 72px; }
+  [data-anim] .steps { isolation: isolate; }
+  [data-anim] .steps::before { content: ""; z-index: -1; position: absolute; left: 39.5px; top: 30px; bottom: 30px; width: 1px; background: rgba(255,255,255,.1); }
+  [data-anim] .steps::after { content: ""; z-index: -1; position: absolute; left: 39.5px; top: 30px; bottom: 30px; width: 1px; background: linear-gradient(#7a97ff, #4775f5); transform: scaleY(var(--p, 0)); transform-origin: top center; box-shadow: 0 0 10px rgba(122,151,255,.8); }
+  [data-anim] .step { opacity: .45; }
+  [data-anim] .step .num { background: #08090f; position: relative; z-index: 1; }
+  [data-anim] .step.on { opacity: 1; background: #0f1218; border-color: rgba(122,151,255,.3); }
+  [data-anim] .step.on .num, [data-anim] .step.done .num { background: #7a97ff; color: #08090f; border-color: #7a97ff; box-shadow: 0 0 0 6px rgba(122,151,255,.14); }
+  [data-anim] .step.done { opacity: .7; }
+  [data-anim] .stage { display: block; height: 400px; }
+  [data-anim] .scene { position: absolute; left: 0; right: 0; top: 50%; opacity: 0; transform: translateY(calc(-50% + 70px)) scale(.94) rotateX(-8deg); transform-origin: center top; transition: opacity .55s ease, transform .7s cubic-bezier(.2,.7,.2,1); pointer-events: none; }
+  [data-anim] .scene.past { transform: translateY(calc(-50% - 70px)) scale(.94) rotateX(8deg); }
+  [data-anim] .scene.on { opacity: 1; transform: translateY(-50%); pointer-events: auto; }
+  [data-anim] .stage { perspective: 1200px; }
+  [data-anim] .scene.on .type { animation: typing 1.4s steps(34) .25s both; }
+  [data-anim] .scene .plrow { opacity: 0; translate: 0 14px; transition: opacity .5s ease, translate .5s ease; }
+  [data-anim] .scene.on .plrow { opacity: 1; translate: 0 0; }
+  [data-anim] .scene.on .plrow:nth-child(2) { transition-delay: .08s; }
+  [data-anim] .scene.on .plrow:nth-child(3) { transition-delay: .16s; }
+  [data-anim] .scene.on .plrow:nth-child(4) { transition-delay: .24s; }
+}
+
+</style>
 </head>
 <body>
 <div data-ghost="1" style="background: #08090f; color: #f1efe9; font-family: Archivo, system-ui, -apple-system, 'Segoe UI', sans-serif; overflow-x: clip">
 
-<header style="position: sticky; top: 12px; z-index: 20; padding: 12px 16px 0">
+<div class="prog" aria-hidden="true"><i data-prog></i></div>
+<header data-nav style="position: sticky; top: 12px; z-index: 20; padding: 12px 16px 0">
 <nav aria-label="Principal" style="max-width: 860px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; gap: 16px; height: 60px; padding: 0 8px 0 20px; border-radius: 999px; background: rgba(15,18,24,.72); border: 1px solid rgba(255,255,255,.1); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px)">
 <a href="#topo" style="display: flex; align-items: center; gap: 10px; font-weight: 700; font-size: 19px; letter-spacing: -0.01em">
 <svg aria-hidden="true" width="22" height="25" viewBox="0 0 32 36" fill="none"><path d="M4 16C4 8.3 9.4 3 16 3C22.6 3 28 8.3 28 16V33.2L24.2 30.2L20.1 33.2L16 30.2L11.9 33.2L7.8 30.2L4 33.2V16Z" fill="#f1efe9"></path><path d="M10 13.2L13.6 16.4L10 19.6" stroke="#08090f" style="stroke-width: 2.2; stroke-linecap: round; stroke-linejoin: round"></path><path d="M16.4 20H21.8" stroke="#08090f" style="stroke-width: 2.2; stroke-linecap: round"></path></svg>
@@ -235,13 +326,13 @@ details p { margin: 0; padding: 0 60px 26px 4px; color: #9aa3b8; font-size: 16px
 <div class="mono" style="font-size: 12px; color: #9aa3b8; letter-spacing: .06em; text-transform: uppercase">Sua fatura</div>
 <div style="margin-top: 14px; display: flex; justify-content: space-between; align-items: baseline; gap: 12px">
 <span style="color: #9aa3b8; font-size: 14px">mensagens no mês</span>
-<span class="mono" style="font-size: 18px; font-weight: 700">12.486</span>
+<span class="mono" style="font-size: 18px; font-weight: 700" data-count="12486" data-dec="0">12.486</span>
 </div>
 <div style="margin-top: 10px; padding-top: 10px; border-top: 1px dashed rgba(255,255,255,.12); display: flex; justify-content: space-between; align-items: baseline; gap: 12px">
 <span style="color: #9aa3b8; font-size: 14px">cobrança extra</span>
 <span class="mono" style="font-size: 26px; font-weight: 700; color: #7a97ff">R$ 0,00</span>
 </div>
-<div style="margin-top: 14px; font-size: 14px; color: #c9cfdd">Sem surpresa na fatura.</div>
+<div class="hand">sem surpresa na fatura</div>
 </div>
 </div>
 </section>
@@ -249,10 +340,10 @@ details p { margin: 0; padding: 0 60px 26px 4px; color: #9aa3b8; font-size: 16px
 <section style="padding: 56px 0 0">
 <div class="wrap">
 <div class="rv" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(220px, 100%), 1fr)); gap: 0; border: 1px solid rgba(255,255,255,.08); border-radius: 24px; background: #0f1218; overflow: hidden">
-<div style="padding: 26px 28px; border-right: 1px solid rgba(255,255,255,.06)"><div style="font-size: 36px; font-weight: 600; letter-spacing: -0.03em">10</div><div style="color: #9aa3b8; font-size: 15px; margin-top: 4px">modelos numa chave só</div></div>
+<div style="padding: 26px 28px; border-right: 1px solid rgba(255,255,255,.06)"><div style="font-size: 36px; font-weight: 600; letter-spacing: -0.03em" data-count="10" data-dec="0">10</div><div style="color: #9aa3b8; font-size: 15px; margin-top: 4px">modelos numa chave só</div></div>
 <div style="padding: 26px 28px; border-right: 1px solid rgba(255,255,255,.06)"><div style="font-size: 36px; font-weight: 600; letter-spacing: -0.03em">1M</div><div style="color: #9aa3b8; font-size: 15px; margin-top: 4px">tokens de contexto</div></div>
 <div style="padding: 26px 28px; border-right: 1px solid rgba(255,255,255,.06)"><div style="font-size: 36px; font-weight: 600; letter-spacing: -0.03em; color: #7a97ff">∞</div><div style="color: #9aa3b8; font-size: 15px; margin-top: 4px">mensagens por mês</div></div>
-<div style="padding: 26px 28px"><div style="font-size: 36px; font-weight: 600; letter-spacing: -0.03em">98,94%</div><div style="color: #9aa3b8; font-size: 15px; margin-top: 4px">uptime nos últimos 30 dias</div></div>
+<div style="padding: 26px 28px"><div style="font-size: 36px; font-weight: 600; letter-spacing: -0.03em" data-count="98.94" data-dec="2" data-suf="%">98,94%</div><div style="color: #9aa3b8; font-size: 15px; margin-top: 4px">uptime nos últimos 30 dias</div></div>
 </div>
 <p class="rv" style="margin: 56px 0 20px; text-align: center; color: #9aa3b8; font-size: 15px">Funciona nas suas ferramentas</p>
 </div>
@@ -264,23 +355,90 @@ details p { margin: 0; padding: 0 60px 26px 4px; color: #9aa3b8; font-size: 16px
 </div>
 </section>
 
-<section id="modelos" class="sec">
-<div class="wrap">
+<section id="modelos" class="railsec" data-railsec>
+<div class="railpin">
+<div class="wrap" style="width: 100%">
 <p class="eye rv">Modelos</p>
+<div style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: flex-end; gap: 16px 40px">
 <h2 class="h2 lit"><span class="w">Os</span> <span class="w">modelos</span> <span class="w">de</span> <span class="w">fronteira,</span><br><span class="w a">numa</span> <span class="w a">chave</span> <span class="w a">só.</span></h2>
-<div class="rv" style="margin-top: 48px; border: 1px solid rgba(255,255,255,.08); border-radius: 24px; background: #0f1218; overflow-x: auto">
-<div class="row hd"><span>Modelo</span><span>Laboratório</span><span>Contexto</span><span>Saída</span><span>Plano</span></div>
-<div class="row"><strong style="font-weight: 600">Claude Opus 5.5</strong><span style="color: #9aa3b8; display: inline-flex; align-items: center"><img class="lg" src="https://ghostcli.cloud/logos/integracoes/claude.svg" alt="" width="18" height="18">Anthropic</span><span style="color: #c9cfdd">256k Pro / Max · 1M Enterprise / Teams</span><span class="mono" style="font-size: 13px">128K</span><span><span class="tag">a partir do Pro</span></span></div>
-<div class="row"><strong style="font-weight: 600">Claude Sonnet 5</strong><span style="color: #9aa3b8; display: inline-flex; align-items: center"><img class="lg" src="https://ghostcli.cloud/logos/integracoes/claude.svg" alt="" width="18" height="18">Anthropic</span><span style="color: #c9cfdd">256k Pro / Max · 1M Enterprise / Teams</span><span class="mono" style="font-size: 13px">128K</span><span><span class="tag">a partir do Pro</span></span></div>
-<div class="row"><strong style="font-weight: 600">Claude Sonnet 5.5</strong><span style="color: #9aa3b8; display: inline-flex; align-items: center"><img class="lg" src="https://ghostcli.cloud/logos/integracoes/claude.svg" alt="" width="18" height="18">Anthropic</span><span style="color: #c9cfdd">256k Pro / Max · 1M Enterprise / Teams</span><span class="mono" style="font-size: 13px">128K</span><span><span class="tag">a partir do Pro</span></span></div>
-<div class="row"><strong style="font-weight: 600">Claude Fable 5.2</strong><span style="color: #9aa3b8; display: inline-flex; align-items: center"><img class="lg" src="https://ghostcli.cloud/logos/integracoes/claude.svg" alt="" width="18" height="18">Anthropic</span><span style="color: #c9cfdd">256k Max · 1M Enterprise / Teams</span><span class="mono" style="font-size: 13px">128K</span><span><span class="tag">a partir do Max</span></span></div>
-<div class="row"><strong style="font-weight: 600">GLM 5.3</strong><span style="color: #9aa3b8">Z.ai</span><span style="color: #c9cfdd">1M · todos os planos</span><span class="mono" style="font-size: 13px">128K</span><span><span class="tag">a partir do Pro</span></span></div>
-<div class="row"><strong style="font-weight: 600">GLM 5.3 Flash</strong><span style="color: #9aa3b8">Z.ai</span><span style="color: #c9cfdd">1M · todos os planos</span><span class="mono" style="font-size: 13px">8K</span><span><span class="tag">a partir do Pro</span></span></div>
-<div class="row"><strong style="font-weight: 600">Hunyuan Hy4 Preview</strong><span style="color: #9aa3b8; display: inline-flex; align-items: center"><img class="lg" src="https://ghostcli.cloud/logos/tencent.png" alt="" width="18" height="18">Tencent</span><span style="color: #c9cfdd">1M · todos os planos</span><span class="mono" style="font-size: 13px">8K</span><span><span class="tag">a partir do Pro</span></span></div>
-<div class="row"><strong style="font-weight: 600">DeepSeek V4.1 Flash</strong><span style="color: #9aa3b8; display: inline-flex; align-items: center"><img class="lg" src="https://ghostcli.cloud/logos/deepseek-logo.svg" alt="" width="18" height="18">DeepSeek</span><span style="color: #c9cfdd">1M · todos os planos</span><span class="mono" style="font-size: 13px">8K</span><span><span class="tag">a partir do Pro</span></span></div>
-<div class="row"><strong style="font-weight: 600">MiMo V2.6 Pro</strong><span style="color: #9aa3b8; display: inline-flex; align-items: center"><img class="lg" src="https://ghostcli.cloud/logos/xiaomi.png" alt="" width="18" height="18">Xiaomi</span><span style="color: #c9cfdd">1M · todos os planos</span><span class="mono" style="font-size: 13px">8K</span><span><span class="tag">a partir do Pro</span></span></div>
-<div class="row"><strong style="font-weight: 600">GPT-6 Astra</strong><span style="color: #9aa3b8">OpenAI</span><span style="color: #c9cfdd">1M · Enterprise / Teams</span><span class="mono" style="font-size: 13px">128K</span><span><span class="tag">a partir do Enterprise</span></span></div>
+<p class="mono rv" style="margin: 0; color: #9aa3b8; font-size: 13px">Role para ver todos os modelos →</p>
 </div>
+</div>
+<div class="rail" data-rail>
+<div class="railt">
+<article class="mc card">
+<div class="mc-top"><span class="mc-lab"><img class="lg" src="https://ghostcli.cloud/logos/integracoes/claude.svg" alt="" width="18" height="18">Anthropic</span><span class="mono mc-n">01/10</span></div>
+<h3 class="mc-h">Claude Opus 5.5</h3>
+<div class="mc-r"><span class="mc-k">Contexto</span><span class="mc-v">256k · Pro / Max<br>1M · Enterprise / Teams</span></div>
+<div class="mc-r"><span class="mc-k">Saída</span><span class="mc-v mono">128K</span></div>
+<div class="mc-f"><span class="tag">a partir do Pro</span></div>
+</article>
+<article class="mc card">
+<div class="mc-top"><span class="mc-lab"><img class="lg" src="https://ghostcli.cloud/logos/integracoes/claude.svg" alt="" width="18" height="18">Anthropic</span><span class="mono mc-n">02/10</span></div>
+<h3 class="mc-h">Claude Sonnet 5</h3>
+<div class="mc-r"><span class="mc-k">Contexto</span><span class="mc-v">256k · Pro / Max<br>1M · Enterprise / Teams</span></div>
+<div class="mc-r"><span class="mc-k">Saída</span><span class="mc-v mono">128K</span></div>
+<div class="mc-f"><span class="tag">a partir do Pro</span></div>
+</article>
+<article class="mc card">
+<div class="mc-top"><span class="mc-lab"><img class="lg" src="https://ghostcli.cloud/logos/integracoes/claude.svg" alt="" width="18" height="18">Anthropic</span><span class="mono mc-n">03/10</span></div>
+<h3 class="mc-h">Claude Sonnet 5.5</h3>
+<div class="mc-r"><span class="mc-k">Contexto</span><span class="mc-v">256k · Pro / Max<br>1M · Enterprise / Teams</span></div>
+<div class="mc-r"><span class="mc-k">Saída</span><span class="mc-v mono">128K</span></div>
+<div class="mc-f"><span class="tag">a partir do Pro</span></div>
+</article>
+<article class="mc card">
+<div class="mc-top"><span class="mc-lab"><img class="lg" src="https://ghostcli.cloud/logos/integracoes/claude.svg" alt="" width="18" height="18">Anthropic</span><span class="mono mc-n">04/10</span></div>
+<h3 class="mc-h">Claude Fable 5.2</h3>
+<div class="mc-r"><span class="mc-k">Contexto</span><span class="mc-v">256k · Max<br>1M · Enterprise / Teams</span></div>
+<div class="mc-r"><span class="mc-k">Saída</span><span class="mc-v mono">128K</span></div>
+<div class="mc-f"><span class="tag">a partir do Max</span></div>
+</article>
+<article class="mc card">
+<div class="mc-top"><span class="mc-lab">Z.ai</span><span class="mono mc-n">05/10</span></div>
+<h3 class="mc-h">GLM 5.3</h3>
+<div class="mc-r"><span class="mc-k">Contexto</span><span class="mc-v">1M · todos os planos</span></div>
+<div class="mc-r"><span class="mc-k">Saída</span><span class="mc-v mono">128K</span></div>
+<div class="mc-f"><span class="tag">a partir do Pro</span></div>
+</article>
+<article class="mc card">
+<div class="mc-top"><span class="mc-lab">Z.ai</span><span class="mono mc-n">06/10</span></div>
+<h3 class="mc-h">GLM 5.3 Flash</h3>
+<div class="mc-r"><span class="mc-k">Contexto</span><span class="mc-v">1M · todos os planos</span></div>
+<div class="mc-r"><span class="mc-k">Saída</span><span class="mc-v mono">8K</span></div>
+<div class="mc-f"><span class="tag">a partir do Pro</span></div>
+</article>
+<article class="mc card">
+<div class="mc-top"><span class="mc-lab"><img class="lg" src="https://ghostcli.cloud/logos/tencent.png" alt="" width="18" height="18">Tencent</span><span class="mono mc-n">07/10</span></div>
+<h3 class="mc-h">Hunyuan Hy4 Preview</h3>
+<div class="mc-r"><span class="mc-k">Contexto</span><span class="mc-v">1M · todos os planos</span></div>
+<div class="mc-r"><span class="mc-k">Saída</span><span class="mc-v mono">8K</span></div>
+<div class="mc-f"><span class="tag">a partir do Pro</span></div>
+</article>
+<article class="mc card">
+<div class="mc-top"><span class="mc-lab"><img class="lg" src="https://ghostcli.cloud/logos/deepseek-logo.svg" alt="" width="18" height="18">DeepSeek</span><span class="mono mc-n">08/10</span></div>
+<h3 class="mc-h">DeepSeek V4.1 Flash</h3>
+<div class="mc-r"><span class="mc-k">Contexto</span><span class="mc-v">1M · todos os planos</span></div>
+<div class="mc-r"><span class="mc-k">Saída</span><span class="mc-v mono">8K</span></div>
+<div class="mc-f"><span class="tag">a partir do Pro</span></div>
+</article>
+<article class="mc card">
+<div class="mc-top"><span class="mc-lab"><img class="lg" src="https://ghostcli.cloud/logos/xiaomi.png" alt="" width="18" height="18">Xiaomi</span><span class="mono mc-n">09/10</span></div>
+<h3 class="mc-h">MiMo V2.6 Pro</h3>
+<div class="mc-r"><span class="mc-k">Contexto</span><span class="mc-v">1M · todos os planos</span></div>
+<div class="mc-r"><span class="mc-k">Saída</span><span class="mc-v mono">8K</span></div>
+<div class="mc-f"><span class="tag">a partir do Pro</span></div>
+</article>
+<article class="mc card">
+<div class="mc-top"><span class="mc-lab">OpenAI</span><span class="mono mc-n">10/10</span></div>
+<h3 class="mc-h">GPT-6 Astra</h3>
+<div class="mc-r"><span class="mc-k">Contexto</span><span class="mc-v">1M · Enterprise / Teams</span></div>
+<div class="mc-r"><span class="mc-k">Saída</span><span class="mc-v mono">128K</span></div>
+<div class="mc-f"><span class="tag">a partir do Enterprise</span></div>
+</article>
+</div>
+</div>
+<div class="wrap" style="width: 100%"><div class="railbar"><i data-railbar></i></div></div>
 </div>
 </section>
 
@@ -295,24 +453,26 @@ details p { margin: 0; padding: 0 60px 26px 4px; color: #9aa3b8; font-size: 16px
 <div class="rv d1" style="display: flex; flex-direction: column; gap: 16px">
 <div class="card" style="padding: 26px 28px">
 <div class="mono" style="font-size: 12px; letter-spacing: .08em; color: #9aa3b8; text-transform: uppercase">Pagando por token</div>
+<div class="bar" style="margin-top: 14px" aria-hidden="true"><i style="width: 100%; background: #59617a"></i></div>
 <div class="mono" style="margin-top: 16px; display: grid; grid-template-columns: auto 1fr auto; gap: 8px 16px; font-size: 14px; color: #c9cfdd">
 <span>entrada</span><span style="color: #9aa3b8">3,6M tokens × US$ 5</span><span>US$ 18,00</span>
 <span>saída</span><span style="color: #9aa3b8">2,8M tokens × US$ 25</span><span>US$ 70,00</span>
 <span>total</span><span style="color: #9aa3b8">US$ 1 = R$ 5,40</span><span>US$ 88,00</span>
 </div>
-<div style="margin-top: 18px; padding-top: 18px; border-top: 1px dashed rgba(255,255,255,.12); display: flex; justify-content: space-between; align-items: baseline; gap: 16px"><span style="color: #9aa3b8">em reais</span><span style="font-size: 32px; font-weight: 600; letter-spacing: -0.02em">R$ 475,20</span></div>
+<div style="margin-top: 18px; padding-top: 18px; border-top: 1px dashed rgba(255,255,255,.12); display: flex; justify-content: space-between; align-items: baseline; gap: 16px"><span style="color: #9aa3b8">em reais</span><span style="font-size: 32px; font-weight: 600; letter-spacing: -0.02em" data-count="475.2" data-dec="2" data-pre="R$ ">R$ 475,20</span></div>
 </div>
 <div class="card feat" style="padding: 26px 28px; border-color: rgba(122,151,255,.45); background: #10131c">
 <div class="mono" style="font-size: 12px; letter-spacing: .08em; color: #a9bcff; text-transform: uppercase">Com a GhostCLI</div>
+<div class="bar" style="margin-top: 14px" aria-hidden="true"><i style="width: 34%; background: #7a97ff"></i></div>
 <div style="margin-top: 16px; display: flex; justify-content: space-between; gap: 16px; color: #c9cfdd; font-size: 15px"><span>GhostCLI Pro (30 dias) · nunca por token</span><span class="mono">R$ 135,00</span></div>
 <div style="margin-top: 8px; display: flex; justify-content: space-between; gap: 16px; color: #c9cfdd; font-size: 15px"><span>Acesso à API (30 dias)</span><span class="mono">R$ 25,00</span></div>
-<div style="margin-top: 18px; padding-top: 18px; border-top: 1px dashed rgba(255,255,255,.14); display: flex; justify-content: space-between; align-items: baseline; gap: 16px"><span style="color: #c9cfdd">diferença no mês</span><span style="font-size: 40px; font-weight: 600; letter-spacing: -0.03em; color: #7a97ff">R$ 315,20</span></div>
+<div style="margin-top: 18px; padding-top: 18px; border-top: 1px dashed rgba(255,255,255,.14); display: flex; justify-content: space-between; align-items: baseline; gap: 16px"><span style="color: #c9cfdd">diferença no mês</span><span style="font-size: 40px; font-weight: 600; letter-spacing: -0.03em; color: #7a97ff" data-count="315.2" data-dec="2" data-pre="R$ ">R$ 315,20</span></div>
 </div>
 </div>
 </div>
 </section>
 
-<section id="recursos" class="sec" style="background: #0c0e15">
+<section id="recursos" class="sec" style="background: #0c0e15; padding-top: 16px">
 <div class="wrap">
 <p class="eye rv">Recursos</p>
 <h2 class="h2 lit"><span class="w">Feito</span> <span class="w">para</span> <span class="w">quem</span> <span class="w">usa</span> <span class="w">IA</span><br><span class="w a">o</span> <span class="w a">dia</span> <span class="w a">inteiro.</span></h2>
@@ -330,19 +490,56 @@ details p { margin: 0; padding: 0 60px 26px 4px; color: #9aa3b8; font-size: 16px
 </div>
 </section>
 
-<section class="sec" style="background: #08090f; border-radius: 48px 48px 0 0; border-top: 1px solid rgba(255,255,255,.07); margin-top: -1px">
-<div class="wrap">
-<p class="eye rv">Como funciona</p>
-<h2 class="h2 lit"><span class="w">Três</span> <span class="w">passos.</span> <span class="w a">Uma</span> <span class="w a">chave.</span></h2>
-<div style="margin-top: 48px; display: grid; grid-template-columns: repeat(auto-fit, minmax(min(320px, 100%), 1fr)); gap: 16px">
-<div class="card rv"><div class="mono" style="color: #7a97ff; font-size: 13px">01</div><h3 style="margin: 12px 0 0; font-size: 22px; font-weight: 600">Escolha um plano</h3><div style="margin-top: 20px; display: flex; flex-wrap: wrap; gap: 8px"><span class="tag">Pro</span><span class="tag">Max</span><span class="tag">Enterprise</span><span class="tag">Teams</span></div></div>
-<div class="card rv d1"><div class="mono" style="color: #7a97ff; font-size: 13px">02</div><h3 style="margin: 12px 0 0; font-size: 22px; font-weight: 600">Gere uma chave no painel</h3><div class="mono" style="margin-top: 20px; padding: 12px 14px; border-radius: 12px; background: #08090f; border: 1px solid rgba(255,255,255,.08); font-size: 14px; color: #c9cfdd">gcli_••••••••••••</div><p style="margin: 12px 0 0; color: #9aa3b8; font-size: 14px">Acesso à API · R$ 25,00 por 30 dias</p></div>
-<div class="card rv d2"><div class="mono" style="color: #7a97ff; font-size: 13px">03</div><h3 style="margin: 12px 0 0; font-size: 22px; font-weight: 600">Cole no Claude Code ou no Codex</h3><div class="mono" style="margin-top: 20px; padding: 12px 14px; border-radius: 12px; background: #08090f; border: 1px solid rgba(255,255,255,.08); font-size: 12.5px; color: #c9cfdd; overflow-x: auto; white-space: nowrap"><span style="color: #9aa3b8"># bash</span><br>export ANTHROPIC_BASE_URL=https://ghostcli.cloud<br><span style="color: #9aa3b8"># PowerShell</span><br>$env:ANTHROPIC_BASE_URL="https://ghostcli.cloud"</div></div>
+<section id="como" class="how" data-how>
+<div class="howpin">
+<div class="wrap howgrid">
+<div>
+<p class="eye">Como funciona</p>
+<h2 class="h2 lit"><span class="w">Três</span> <span class="w">passos.</span><br><span class="w a">Uma</span> <span class="w a">chave.</span></h2>
+<ol class="steps">
+<li class="step on" data-step="0"><span class="mono num">01</span><div><h3>Escolha um plano</h3><p>Pro, Max, Enterprise ou Teams. Planos de 30 dias, PIX ou cripto.</p></div></li>
+<li class="step" data-step="1"><span class="mono num">02</span><div><h3>Gere uma chave no painel</h3><p>Acesso à API · R$ 25,00 por 30 dias.</p></div></li>
+<li class="step" data-step="2"><span class="mono num">03</span><div><h3>Cole a chave no Claude Code ou no Codex</h3><p>Funciona onde você já trabalha.</p></div></li>
+</ol>
+</div>
+<div class="stage">
+<div class="glow" aria-hidden="true"></div>
+
+<div class="scene panel on" data-scene="0">
+<div class="sch mono"><span>&gt;_ planos</span><span>30 dias · PIX ou cripto</span></div>
+<div class="scb">
+<div class="plrow sel"><span class="rd"></span><strong>Pro</strong><span class="mono">R$ 135,00</span></div>
+<div class="plrow"><span class="rd"></span><strong>Max</strong><span class="mono">R$ 164,90</span></div>
+<div class="plrow"><span class="rd"></span><strong>Enterprise</strong><span class="mono">R$ 650,00</span></div>
+<div class="plrow"><span class="rd"></span><strong>GhostCLI For Teams</strong><span class="mono">R$ 1.450,00</span></div>
+</div>
+</div>
+
+<div class="scene panel" data-scene="1">
+<div class="sch mono"><span>&gt;_ painel · chaves de API</span><span>acesso à API</span></div>
+<div class="scb" style="gap: 18px">
+<div class="mono keyf"><span class="type">gcli_••••••••••••</span><span class="caret"></span></div>
+<a class="btn" href="https://ghostcli.cloud/" style="align-self: flex-start">Gerar minha chave <span class="dot"><svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" style="stroke-width: 2; stroke-linecap: round; stroke-linejoin: round"><path d="M5 12h14M13 6l6 6-6 6"></path></svg></span></a>
+<p class="mono" style="margin: 0; font-size: 13px; color: #9aa3b8">acesso à API · R$ 25,00 por 30 dias</p>
+</div>
+</div>
+
+<div class="scene panel" data-scene="2">
+<div class="sch mono"><span class="tabs"><span class="tab on">PowerShell</span><span class="tab">cmd</span><span class="tab">bash</span></span><span>Copiar</span></div>
+<div class="scb" style="gap: 18px">
+<div class="mono cmd"><span class="type">$env:ANTHROPIC_BASE_URL="https://ghostcli.cloud"</span><span class="caret"></span></div>
+<div class="mono cmd" style="color: #9aa3b8"><span style="color: #7a97ff">$</span> export ANTHROPIC_BASE_URL=https://ghostcli.cloud</div>
+<p style="margin: 6px 0 0; font-size: 14px; color: #9aa3b8">Funciona onde você já trabalha</p>
+<div style="display: flex; flex-wrap: wrap; gap: 8px"><span class="mqi sm"><img class="lg" src="https://ghostcli.cloud/logos/integracoes/claude.svg" alt="" width="18" height="18">Claude Code</span><span class="mqi sm"><img class="lg" src="https://ghostcli.cloud/logos/codex.png" alt="" width="18" height="18">Codex CLI</span><span class="mqi sm"><img class="lg" src="https://ghostcli.cloud/logos/bench/cursor.svg" alt="" width="18" height="18">Cursor</span><span class="mqi sm"><img class="lg" src="https://ghostcli.cloud/logos/integracoes/cline.svg" alt="" width="18" height="18">Cline</span><span class="mqi sm"><img class="lg" src="https://ghostcli.cloud/logos/integracoes/vscode.svg" alt="" width="18" height="18">VS Code</span><span class="mqi sm"><img class="lg" src="https://ghostcli.cloud/logos/integracoes/windsurf.svg" alt="" width="18" height="18">Windsurf</span></div>
+</div>
+</div>
+
+</div>
 </div>
 </div>
 </section>
 
-<section class="sec" style="padding-top: 0">
+<section class="sec">
 <div class="wrap" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(420px, 100%), 1fr)); gap: 56px; align-items: center">
 <div>
 <p class="eye rv">API</p>
@@ -515,15 +712,126 @@ details p { margin: 0; padding: 0 60px 26px 4px; color: #9aa3b8; font-size: 16px
 
 </div>
 <script>
-document.querySelectorAll('img.lg').forEach(function(i){i.addEventListener('error',function(){i.style.display='none';});});
-(function(){
-var root=document.querySelector('[data-ghost]');
-if(!root||!('IntersectionObserver' in window))return;
-if(window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches)return;
-root.setAttribute('data-anim','1');
-var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.setAttribute('data-in','1');io.unobserve(e.target);}});},{threshold:0.12,rootMargin:'0px 0px -6% 0px'});
-var els=root.querySelectorAll('.rv, .lit');for(var i=0;i<els.length;i++)io.observe(els[i]);
+(function () {
+  var root = document.querySelector('[data-ghost]');
+  document.querySelectorAll('img.lg').forEach(function (i) {
+    i.addEventListener('error', function () { i.style.display = 'none'; });
+  });
+  if (!root || !('IntersectionObserver' in window)) return;
+  if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  root.setAttribute('data-anim', '1');
+
+  var clamp = function (v) { return v < 0 ? 0 : v > 1 ? 1 : v; };
+  var vh = window.innerHeight, wide = window.innerWidth > 860;
+
+  // revelar ao entrar na tela + contadores
+  var fmt = function (el, v) {
+    var d = +(el.getAttribute('data-dec') || 0);
+    el.textContent = (el.getAttribute('data-pre') || '') + v.toLocaleString('pt-BR', { minimumFractionDigits: d, maximumFractionDigits: d }) + (el.getAttribute('data-suf') || '');
+  };
+  var count = function (el) {
+    var end = +el.getAttribute('data-count'), t0 = performance.now(), dur = 1400;
+    (function tick(t) {
+      var p = clamp((t - t0) / dur), e = 1 - Math.pow(1 - p, 3);
+      fmt(el, end * e);
+      if (p < 1) requestAnimationFrame(tick);
+    })(t0);
+  };
+  var io = new IntersectionObserver(function (es) {
+    es.forEach(function (e) {
+      if (!e.isIntersecting) return;
+      if (e.target.hasAttribute('data-count')) count(e.target); else e.target.setAttribute('data-in', '1');
+      io.unobserve(e.target);
+    });
+  }, { threshold: 0.12, rootMargin: '0px 0px -6% 0px' });
+  root.querySelectorAll('.rv, [data-count]').forEach(function (el) { io.observe(el); });
+
+  // elementos guiados pelo scroll
+  var lits = [].map.call(root.querySelectorAll('.lit'), function (el) { return { el: el, ws: el.querySelectorAll('.w'), n: 0 }; });
+  var prog = root.querySelector('[data-prog]'), nav = root.querySelector('[data-nav]');
+  var hero = root.querySelector('.hero'), hin = root.querySelector('.hin');
+  var pars = [].map.call(root.querySelectorAll('.hero .deco.chip'), function (el, i) { return { el: el, f: 0.18 + (i % 2) * 0.12 }; })
+    .concat([].map.call(root.querySelectorAll('.hero .fl'), function (el, i) { return { el: el, f: i ? -0.16 : -0.1 }; }));
+  var rsec = root.querySelector('[data-railsec]'), rail = root.querySelector('[data-rail]'), track = rail && rail.firstElementChild, rbar = root.querySelector('[data-railbar]');
+  var how = root.querySelector('[data-how]'), steps = how ? how.querySelectorAll('.step') : [], scenes = how ? how.querySelectorAll('.scene') : [], stepsEl = how && how.querySelector('.steps');
+  var railMax = 0, railX = 0, railT = 0, active = -1;
+
+  function measure() {
+    vh = window.innerHeight; wide = window.innerWidth > 860;
+    if (rsec && track) {
+      if (wide) { railMax = Math.max(0, track.scrollWidth - rail.clientWidth); rsec.style.height = (Math.max(vh, 560) + railMax) + 'px'; }
+      else { railMax = 0; rsec.style.height = ''; track.style.transform = ''; }
+    }
+  }
+  function setStep(i) {
+    if (i === active) return; active = i;
+    for (var k = 0; k < steps.length; k++) {
+      steps[k].classList.toggle('on', k === i); steps[k].classList.toggle('done', k < i);
+      scenes[k].classList.toggle('on', k === i); scenes[k].classList.toggle('past', k < i);
+    }
+  }
+  function update() {
+    var y = window.scrollY || 0, doc = document.documentElement.scrollHeight - vh;
+    if (prog) prog.style.transform = 'scaleX(' + clamp(y / doc) + ')';
+    if (nav) nav.classList.toggle('scrolled', y > 40);
+    // parallax do hero
+    if (hero && y < hero.offsetHeight + 200) {
+      for (var i = 0; i < pars.length; i++) pars[i].el.style.translate = wide ? '0 ' + (y * pars[i].f).toFixed(1) + 'px' : '';
+      if (hin) { hin.style.translate = '0 ' + (y * 0.12).toFixed(1) + 'px'; hin.style.opacity = (1 - clamp((y - 180) / 520) * 0.85).toFixed(3); }
+    }
+    // palavras acendem com o scroll
+    for (var j = 0; j < lits.length; j++) {
+      var L = lits[j], r = L.el.getBoundingClientRect();
+      if (r.top > vh || L.n >= L.ws.length) continue;
+      var n = Math.ceil(clamp((vh * 0.9 - r.top) / (vh * 0.38)) * L.ws.length);
+      for (; L.n < n; L.n++) L.ws[L.n].classList.add('on');
+    }
+    // trilho de modelos
+    if (rsec && wide && railMax) {
+      var rr = rsec.getBoundingClientRect();
+      railT = clamp(-rr.top / (rr.height - vh));
+    }
+    // como funciona
+    if (how) {
+      if (wide) {
+        var hr = how.getBoundingClientRect(), hp = clamp(-hr.top / (hr.height - vh));
+        setStep(Math.min(2, Math.floor(hp * 3)));
+        if (stepsEl) stepsEl.style.setProperty('--p', Math.min(1, hp * 1.5).toFixed(3));
+      } else if (active !== -2) {
+        active = -2;
+        for (var k = 0; k < steps.length; k++) { steps[k].classList.add('on'); scenes[k].classList.add('on'); }
+      }
+    }
+  }
+  // suavização do trilho
+  (function loop() {
+    if (wide && railMax && Math.abs(railT - railX) > 0.0004) {
+      railX += (railT - railX) * 0.12;
+      track.style.transform = 'translate3d(' + (-railX * railMax).toFixed(1) + 'px,0,0)';
+      if (rbar) rbar.style.transform = 'scaleX(' + railX.toFixed(4) + ')';
+    }
+    requestAnimationFrame(loop);
+  })();
+
+  var tick = false;
+  window.addEventListener('scroll', function () {
+    if (tick) return; tick = true;
+    requestAnimationFrame(function () { tick = false; update(); });
+  }, { passive: true });
+  window.addEventListener('resize', function () { measure(); update(); });
+  window.addEventListener('load', function () { measure(); update(); });
+  measure(); update();
+
+  // brilho que segue o mouse nos cartões
+  root.addEventListener('pointermove', function (e) {
+    var c = e.target.closest && e.target.closest('.card');
+    if (!c) return;
+    var b = c.getBoundingClientRect();
+    c.style.setProperty('--mx', (e.clientX - b.left) + 'px');
+    c.style.setProperty('--my', (e.clientY - b.top) + 'px');
+  }, { passive: true });
 })();
+
 </script>
 </body>
 </html>
